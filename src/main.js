@@ -4,4 +4,31 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-createApp(App).use(store).use(router).mount('#app')
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { VCalendar } from 'vuetify/labs/VCalendar'
+import '@mdi/font/css/materialdesignicons.css'
+
+const vuetify = createVuetify({
+    components: {
+        ...components,
+        VCalendar,
+    },
+    directives,
+    theme: {
+        themes: {
+            light: {
+                dark: false,
+                colors: {
+                    primary: '#FF4545',
+                    secondary: '#D4D4D4',
+                }
+            },
+        },
+    },
+})
+
+createApp(App).use(vuetify).use(store).use(router).mount('#app')
