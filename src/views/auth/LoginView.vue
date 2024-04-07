@@ -83,9 +83,7 @@ export default {
         email: null,
         password: null,
       }
-      this.axios.get('/clubs').then(response => {
-        console.log(response.data)
-      })
+      this.axios.get('/clubs');
       // this.axios.post('/login', this.form).then(response => {
       //   console.log(response.data)
       //   window.localStorage.setItem('access_token', response.data.access_token)

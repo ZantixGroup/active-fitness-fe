@@ -16,11 +16,11 @@ import '@mdi/font/css/materialdesignicons.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+axios.defaults.baseURL = 'http://127.0.0.1/api/';
 const app = createApp(App).use(store)
 app.use(VueAxios, axios)
 app.use(router)
 app.mount('#app')
-axios.defaults.baseURL = 'http://127.0.0.1/api/';
 
 
 const vuetify = createVuetify({
