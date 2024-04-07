@@ -6,12 +6,13 @@
           <p style="font-size: 30px; font-weight: bold;">Esi sveicināts!</p>
           <p>Lūdzu ievadiet savus datus</p>
         </div>
-        <v-form>
+        <v-form ref="form" lazy-validation>
           <div class="inputs">
             <v-text-field
                 v-model="form.email"
                 color="#FF4545"
                 label="Epasts"
+                :rules="[v => !!v || 'Name is required']"
                 placeholder="Ievadiet epastu"
                 variant="underlined"
             ></v-text-field>
@@ -78,6 +79,7 @@ export default {
   },
   methods: {
     login() {
+      this.$refs.form.validate();
       this.formErrors = {
         name: null,
         email: null,
