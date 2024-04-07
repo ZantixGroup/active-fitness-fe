@@ -17,11 +17,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 axios.defaults.baseURL = 'http://127.0.0.1/api/';
-const app = createApp(App).use(store)
-app.use(VueAxios, axios)
-app.use(router)
-app.mount('#app')
-
 
 const vuetify = createVuetify({
     components: {
@@ -42,4 +37,4 @@ const vuetify = createVuetify({
     },
 })
 
-createApp(App).use(vuetify).use(store).use(router).mount('#app')
+createApp(App).use(VueAxios, axios).use(vuetify).use(store).use(router).mount('#app')
