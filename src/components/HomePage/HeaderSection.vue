@@ -3,12 +3,12 @@
     <div class="hero-section-content">
       <div class="hero-section-text">
         <h1 class="hero-section-header">
-          Vēlies uzlabot savu veselību?
-          Pievienojies mūsu sporta klubam.
+          Want to improve your health?
+          Join our sports club.
         </h1>
         <p class="hero-section-paragraph mt-4">
-          Mēs palīdzam cilvēkiem uzlabot viņu fizisko sagatavotību
-          un iegūt savu vēlamo ķermeņa figūru.
+          We help people improve their fitness
+          and get your desired body shape.
         </p>
         <div v-if="!isLoggedIn" class="hero-section-buttons d-flex mt-12" style="gap: 10px">
           <v-btn
@@ -17,7 +17,7 @@
               class="text-uppercase"
               @click="$router.push({ name: 'login' })"
           >
-            Pieslēgties
+            Log in
           </v-btn>
           <v-btn
               variant="text"
@@ -25,7 +25,7 @@
               class="text-uppercase"
               @click="$router.push({ name: 'register' })"
           >
-            Reģistrēties
+            Register
           </v-btn>
         </div>
       </div>

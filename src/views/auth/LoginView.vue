@@ -3,31 +3,34 @@
     <div class="form-card">
       <div class="content">
         <div class="content-header">
-          <p style="font-size: 30px; font-weight: bold;">Esi sveicināts!</p>
-          <p>Lūdzu ievadiet savus datus</p>
+          <p style="font-size: 30px; font-weight: bold;">Welcome!</p>
+          <p>Please enter your details</p>
         </div>
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" lazy-validation style="width: 100%">
           <div class="inputs">
             <v-text-field
                 v-model="form.email"
                 color="#FF4545"
-                label="Epasts"
-                :rules="[v => !!v || 'Name is required']"
-                placeholder="Ievadiet epastu"
+                label="Email Address"
+                type="email"
+                required
+                :error-messages="this.formErrors.email"
+                placeholder="Enter your email address"
                 variant="underlined"
             ></v-text-field>
             <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 0">
               <v-text-field
                   v-model="form.password"
                   color="#FF4545"
-                  label="Parole"
-                  placeholder="Ievadiet paroli"
+                  label="Password"
+                  type="password"
+                  required
+                  :error-messages="this.formErrors.password"
+                  placeholder="Enter password"
                   variant="underlined"
               ></v-text-field>
-              <div style="display: flex; justify-content: end; width: 100%">
-                <a href="/" style="text-decoration: none; color: black; font-size: 14px; padding: 0; margin: 0; align-self: end">Aizmirsi paroli?</a>
-              </div>
             </div>
+            <p v-if="formErrors.data" style="color: red">{{formErrors.data}}</p>
           </div>
           <div class="buttons">
             <v-btn
@@ -38,21 +41,12 @@
                 variant="elevated"
                 @click="login()"
             >
-              Pieslēgties
-            </v-btn>
-            <v-btn
-                color="#FF4545"
-                height="44"
-                min-width="164"
-                width="100%"
-                variant="outlined"
-            >
-              Ievadīt kodu
+              Log in
             </v-btn>
           </div>
           <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; font-size: 14px; gap: 2px;">
-            <p>Nav konta?</p>
-            <a href="/register" style="color:#FF4545; text-decoration: none">Reģistrēties</a>
+            <p>Don't have an account?</p>
+            <a href="/register" style="color:#FF4545; text-decoration: none">Register</a>
           </div>
         </v-form>
       </div>
@@ -62,16 +56,17 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   data() {
     return {
       form: {
-        name: null,
         email: null,
         password: null,
       },
       formErrors:{
-        name: null,
+        data: null,
         email: null,
         password: null,
       },
@@ -81,22 +76,24 @@ export default {
     login() {
       this.$refs.form.validate();
       this.formErrors = {
-        name: null,
         email: null,
         password: null,
       }
-      this.axios.get('/clubs');
-      // this.axios.post('/login', this.form).then(response => {
-      //   console.log(response.data)
-      //   window.localStorage.setItem('access_token', response.data.access_token)
-      //   this.axios.defaults.headers.authorization = 'Bearer ' + response.data.access_token
-      //   console.log(this.axios.defaults.headers.authorization)
-      // }).catch(e => {
-      //   console.log(e)
-      //   Object.keys(e.response.data.errors).forEach((key) => {
-      //     this.formErrors[key] = e.response.data.errors[key]
-      //   })
-      // })
+      this.axios.post('/login', this.form).then(response => {
+        console.log(response.data)
+        window.localStorage.setItem('access_token', response.data.access_token)
+        this.axios.defaults.headers.authorization = 'Bearer ' + response.data.access_token
+        console.log(this.axios.defaults.headers.authorization)
+        router.push('/')
+      }).catch(e => {
+        this.formErrors.data = e.response.data.data;
+        if (e.response.data?.errors) {
+          Object.keys(e.response.data.errors).forEach((key) => {
+            this.formErrors[key] = e.response.data.errors[key]
+            console.log(this.formErrors.data)
+          })
+        }
+      })
     },
   },
 }
@@ -119,7 +116,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  padding: 25px;
+  padding: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -134,6 +131,7 @@ export default {
 .content {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   gap:10px;
 }
 </style>
