@@ -12,6 +12,12 @@ import * as directives from 'vuetify/directives'
 import { VCalendar } from 'vuetify/labs/VCalendar'
 import '@mdi/font/css/materialdesignicons.css'
 
+// Axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+axios.defaults.baseURL = 'http://127.0.0.1/api/';
+
 const vuetify = createVuetify({
     components: {
         ...components,
@@ -31,4 +37,4 @@ const vuetify = createVuetify({
     },
 })
 
-createApp(App).use(vuetify).use(store).use(router).mount('#app')
+createApp(App).use(VueAxios, axios).use(vuetify).use(store).use(router).mount('#app')

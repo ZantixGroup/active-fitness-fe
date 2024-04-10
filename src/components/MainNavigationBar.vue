@@ -8,14 +8,14 @@
             class="text-uppercase"
             @click="goTo('register')"
         >
-          Reģistrēties
+          Register
         </v-btn>
         <v-btn
             variant="flat"
             class="text-uppercase ml-2"
             @click="goTo('login')"
         >
-          Pieslēgties
+          Log in
         </v-btn>
       </div>
 
