@@ -2,9 +2,8 @@
   <v-main>
     <MainNavigationBar />
     <!-- Lai content neaiziet aiz header -->
-    <div class="content-wrapper">
-      <slot />
-    </div>
+    <div class="content-wrapper"></div>
+    <slot />
     <MainFooter />
   </v-main>
 </template>

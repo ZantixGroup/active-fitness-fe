@@ -19,8 +19,8 @@
         </v-btn>
       </div>
 
-      <div v-else class="avatar-container">
-        <h2 class="avatar-text text-uppercase">Jānis Bērzgrauzis</h2>
+      <div @click="goTo('profile')" v-else class="avatar-container">
+        <h2 class="avatar-text text-uppercase">{{ user.name }} {{ user.surname }}</h2>
         <v-avatar>
           <v-icon class="avatar-icon" icon="mdi-account" size="x-large"></v-icon>
         </v-avatar>
@@ -34,6 +34,14 @@ import NavigationBarLogo from "@/components/NavigationBarLogo";
 export default {
   name: "MainNavigationBar",
   components: {NavigationBarLogo},
+  data() {
+    return {
+      user: {
+        name: "John",
+        surname: "Doe",
+      },
+    }
+  },
   computed: {
     isLoggedIn() {
       return false;
@@ -75,6 +83,7 @@ header {
   display: flex;
   align-items: center;
   gap: 3px;
+  cursor: pointer;
 }
 
 .avatar-text {
