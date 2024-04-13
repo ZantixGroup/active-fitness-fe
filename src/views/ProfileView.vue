@@ -1,18 +1,81 @@
 <template>
   <div class="body">
-    <div class="content">
-      <div class="form">
-        <p v-if="user">{{user.name}}</p>
-        <p v-if="user">{{user.surname}}</p>
-        <p v-if="user">{{user.email}}</p>
-        <p v-if="user">{{user.password}}</p>
-        <p v-if="user">{{user.phone}}</p>
-        <p v-if="user">{{user.address}}</p>
-        <p v-if="user">{{user.date_of_birthday}}</p>
-        <p v-if="user">{{user.role_id}}</p>
-      </div>
+      <v-form>
+        <h2 class="form-subtitle">General information</h2>
+        <v-container v-if="user">
+          <v-row>
+            <v-col>
+              <v-row>
+                <v-text-field
+                    v-model="user.name"
+                    label="First name"
+                    placeholder="First name"
+                    required
+                    hide-details
+                    variant="underlined"
+                    :active="true"
+                ></v-text-field>
+                <v-text-field
+                    v-model="user.surname"
+                    label="Surname"
+                    placeholder="Surname"
+                    required
+                    hide-details
+                    variant="underlined"
+                    :active="true"
+                ></v-text-field>
+              </v-row>
+              <v-row>
+                <v-text-field
+                    v-model="user.email"
+                    label="E-mail address"
+                    placeholder="example@gmail.com"
+                    required
+                    hide-details
+                    variant="underlined"
+                    :active="true"
+                ></v-text-field>
+                <v-text-field
+                    v-model="user.phone"
+                    label="Phone number"
+                    placeholder="+371 21234567"
+                    required
+                    hide-details
+                    variant="underlined"
+                    :active="true"
+                ></v-text-field>
+              </v-row>
+              <v-row>
+                <v-text-field
+                    v-model="user.address"
+                    label="Address"
+                    placeholder="Enter your address"
+                    required
+                    hide-details
+                    variant="underlined"
+                    :active="true"
+                ></v-text-field>
+                <v-text-field
+                    v-model="user.date_of_birthday"
+                    color="#FF4545"
+                    label="Date of Birth"
+                    placeholder="Enter your Date of Birth"
+                    required
+                    hide-details
+                    variant="underlined"
+                    type="date"
+                    :active="true"
+                ></v-text-field>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+        <div class="d-flex ga-2 pt-3 pa-3 form-submit-buttons">
+          <v-btn @click="save" variant="flat" color="primary" >Saglabāt</v-btn>
+          <v-btn @click="this.$router.go()" variant="text">Atmest izmaiņas</v-btn>
+        </div>
+      </v-form>
     </div>
-  </div>
 </template>
 
 <script>
@@ -24,12 +87,20 @@ export default {
   },
   mounted() {
     this.axios.get('/me').then(response =>{
-      console.log(response.data)
       this.user = response.data
       if (this.user.role_id === 1) {
         this.user.role_id === "user"
       }
     })
+  },
+  methods: {
+    save() {
+      this.axios.put(`/profile_update`, this.user).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error.response.data)
+      })
+    }
   },
 }
 </script>
@@ -43,21 +114,55 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.content {
+
+.v-form {
+  width: 1120px;
+  margin: auto;
+  margin-top: 100px;
   display: flex;
+  flex-direction: column;
+  background-color: white;
   flex-wrap: wrap;
-  width: 100%;
-  gap:10px;
-}
-.form {
-  width: 369px;
-  height: fit-content;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  border-radius: 30px;
-  padding: 30px;
+  border-radius: 10px;
+  padding: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.v-container {
+  flex: 1;
+}
+
+.v-text-field {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.v-text-field >>> input {
+  height: 64px;
+  padding-bottom: 0;
+}
+
+.v-text-field >>> label {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  transform: translateY(10px);
+}
+
+
+.v-text-field {
+  padding: 10px;
+}
+
+.form-subtitle {
+  font-weight: 500;
+  line-height: 32px;
+  font-size: 22px;
+  padding: 10px;
+}
+.form-submit-buttons > * {
+  text-transform: none;
+  font-weight: 500;
+  font-size: 16px;
 }
 </style>
