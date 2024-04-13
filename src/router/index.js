@@ -21,6 +21,7 @@ import MainLayout from "@/layouts/MainLayout";
 
 // Pages
 import ProfileView from "@/views/ProfileView";
+import AuthLayout from "@/layouts/AuthLayout";
 
 const routes = [
   {
@@ -35,7 +36,7 @@ const routes = [
     path: '/login',
     name: 'login',
     meta: {
-      layout: MainLayout,
+      layout: AuthLayout,
     },
     component: LoginView,
   },
@@ -43,7 +44,7 @@ const routes = [
     path: '/register',
     name: 'register',
     meta: {
-      layout: MainLayout,
+      layout: AuthLayout,
     },
     component: RegisterView,
   },
