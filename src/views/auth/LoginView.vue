@@ -10,6 +10,7 @@
           <div class="inputs">
             <v-text-field
                 v-model="form.email"
+                :rules="rules.email"
                 color="#FF4545"
                 label="Email Address"
                 type="email"
@@ -21,6 +22,7 @@
             <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 0">
               <v-text-field
                   v-model="form.password"
+                  :rules="rules.password"
                   color="#FF4545"
                   label="Password"
                   type="password"
@@ -57,6 +59,7 @@
 
 <script>
 import router from "@/router";
+import {ruleSet, ruleSetGen} from "/src/helpers/rules.js";
 
 export default {
   data() {
@@ -69,6 +72,10 @@ export default {
         data: null,
         email: null,
         password: null,
+      },
+      rules: {
+        email: ruleSet.email,
+        password: ruleSetGen.text("Parolei jābūt vismaz 8 rakstzīmju simboliem", true, 8),
       },
     }
   },
