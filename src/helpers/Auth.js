@@ -38,7 +38,6 @@ export default class Auth {
         localStorage.removeItem('user');
         axios.defaults.headers.authorization = null
         this.dataStore.accessToken = null;
-        this.user = null;
+        this.dataStore.user = null;
     }
-
 }

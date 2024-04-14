@@ -19,8 +19,11 @@ import VueAxios from 'vue-axios'
 // VueCalendar
 import calendar from "@zantixgroup/vue-calendar";
 import "@zantixgroup/vue-calendar/dist/style.css";
+import Auth from "@/helpers/Auth";
 
+Auth.setToken(localStorage.getItem('access_token'));
 axios.defaults.baseURL = 'http://127.0.0.1/api/';
+axios.defaults.headers.authorization = 'Bearer ' + Auth.accessToken;
 
 const vuetify = createVuetify({
     components: {

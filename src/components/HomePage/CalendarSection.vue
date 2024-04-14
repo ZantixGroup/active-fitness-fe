@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-if="dialogData" v-model="isDialogActive" min-width="500" max-width="700">
+  <v-dialog v-if="dialogData" v-model="isDialogActive" max-width="700">
     <div class="class-dialog">
       <div class="dialog-header">
         <h3>{{ dialogData.name }}</h3>
@@ -27,11 +27,20 @@
         <v-btn @click="closeDialog">
           Close
         </v-btn>
-        <v-btn v-if="user" color="#ff4545" @click="applyForClass">
-          Apply
-        </v-btn>
-        <v-btn v-else color="#ff4545" @click="$router.push('/login')">
-          Login
+        <v-btn v-if="dialogInfo.is_accepted" color="green" :disabled="true">accepted</v-btn>
+        <v-btn v-else-if="dialogInfo.has_applied" color="green" :disabled="true">applied</v-btn>
+        <v-btn v-else-if="auth.isLoggedIn" color="#ff4545" @click="applyForClass" :disabled="dialogInfo.is_full">Apply</v-btn>
+        <v-btn v-else color="#ff4545" @click="$router.push('/login')">Login</v-btn>
+      </div>
+    </div>
+  </v-dialog>
+  <v-dialog v-model="isAcceptDialogActive" max-width="700">
+    <div class="class-dialog">
+      <h2>You have successfully applied for {{ dialogData.name }}</h2>
+      <p>Check profile</p>
+      <div class="dialog-footer">
+        <v-btn @click="closeDialog">
+          Close
         </v-btn>
       </div>
     </div>
@@ -51,6 +60,7 @@
 
 <script>
 import {VueCalendar} from "@zantixgroup/vue-calendar";
+import Auth from "@/helpers/Auth";
 export default {
   name: "CalendarSection",
   components: {VueCalendar},
@@ -59,6 +69,8 @@ export default {
       user: JSON.parse(localStorage.getItem("user")),
       isDialogActive: false,
       dialogData: null,
+      dialogInfo: null,
+      isAcceptDialogActive: false,
       fetchedMonths: [],
       calendarOptions: {
         showViewSelector: false,
@@ -76,6 +88,11 @@ export default {
       },
     }
   },
+  computed: {
+    auth() {
+      return Auth;
+    }
+  },
   mounted() {
     this.getGroupClassesByEvents(new Date().toLocaleDateString("sv-SE"));
   },
@@ -84,7 +101,7 @@ export default {
       if (this.fetchedMonths.find((e) => e === date) === undefined) {
         const calendarEvents = [];
         setTimeout(async () => {
-          this.axios.get('/classes').then((response) => {
+          await this.axios.get('/classes').then((response) => {
             response.data.data.forEach((groupClass) => {
               const groupClassStartDate = new Date(groupClass.starts_at)
               const groupClassEndDate = new Date(groupClass.ends_at)
@@ -108,7 +125,18 @@ export default {
         }, 500);
       }
     },
-    openDialog(e) {
+    async openDialog(e) {
+      await this.axios.get(`/user_group_class/${e.id}`)
+        .then(response => {
+          this.dialogInfo = response.data.data
+        })
+        .catch(() => {
+          this.dialogInfo = {
+            is_full: false,
+            has_applied: false,
+            is_accepted: false,
+          }
+        })
       this.isDialogActive = true
       this.dialogData = {
         id: e.id,
@@ -125,11 +153,13 @@ export default {
       }
     },
     closeDialog() {
+      this.isAcceptDialogActive = false;
       this.isDialogActive = false;
     },
-    applyForClass() {
-      this.axios.get(`/applyForClass/${this.dialogData.id}`).then(response => {
-        console.log(response)
+    async applyForClass() {
+      await this.axios.get(`/applyForClass/${this.dialogData.id}`).then(() => {
+        this.dialogInfo.has_applied = true;
+        this.isAcceptDialogActive = true
       }).catch(e => {
         console.log(e);
       })
@@ -182,5 +212,19 @@ export default {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+@media only screen and (max-width: 350px) {
+  .dialog-header {
+    flex-direction: column;
+  }
+
+  .dialog-date {
+    flex-direction: column;
+  }
+
+  .dialog-footer {
+    flex-direction: column;
+  }
 }
 </style>
