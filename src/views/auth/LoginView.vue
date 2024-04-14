@@ -59,6 +59,7 @@
 
 <script>
 import router from "@/router";
+import Auth from "@/helpers/Auth";
 import {ruleSet, ruleSetGen} from "/src/helpers/rules.js";
 
 export default {
@@ -79,6 +80,11 @@ export default {
       },
     }
   },
+  mounted() {
+    if (localStorage.getItem("access_token")) {
+      this.$router.push({ path: "/" });
+    }
+  },
   methods: {
     login() {
       this.$refs.form.validate();
@@ -87,10 +93,9 @@ export default {
         password: null,
       }
       this.axios.post('/login', this.form).then(response => {
-        console.log(response.data)
-        window.localStorage.setItem('access_token', response.data.access_token)
-        this.axios.defaults.headers.authorization = 'Bearer ' + response.data.access_token
-        console.log(this.axios.defaults.headers.authorization)
+        window.localStorage.setItem('access_token', response.data.data.access_token)
+        window.localStorage.setItem('user', JSON.stringify(response.data.data.user))
+        Auth.setAuth(response.data.data.access_token, response.data.data.user)
         router.push('/')
       }).catch(e => {
         this.formErrors.data = e.response.data.data;

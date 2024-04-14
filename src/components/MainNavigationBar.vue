@@ -2,7 +2,7 @@
   <header>
     <div class="navigation-bar-content">
       <NavigationBarLogo />
-      <div v-if="!isLoggedIn" class="button-container">
+      <div v-if="!auth.isLoggedIn" class="button-container">
         <v-btn
             variant="text"
             class="text-uppercase"
@@ -18,12 +18,17 @@
           Log in
         </v-btn>
       </div>
-
-      <div @click="goTo('profile')" v-else class="avatar-container">
-        <h2 class="avatar-text text-uppercase">{{ user.name }} {{ user.surname }}</h2>
-        <v-avatar>
-          <v-icon class="avatar-icon" icon="mdi-account" size="x-large"></v-icon>
-        </v-avatar>
+      <div class="d-flex align-center ga-5" v-else>
+        <div class="avatar-container" @click="goTo('profile')">
+          <h2 class="avatar-text text-uppercase">{{ auth.user.name }} {{ auth.user.surname }}</h2>
+          <v-avatar>
+            <v-icon class="avatar-icon" icon="mdi-account" size="x-large"></v-icon>
+          </v-avatar>
+        </div>
+        <div>
+          <v-icon icon="mdi-logout" @click="logout">
+          </v-icon>
+        </div>
       </div>
     </div>
   </header>
@@ -31,25 +36,25 @@
 
 <script>
 import NavigationBarLogo from "@/components/NavigationBarLogo";
+import Auth from "@/helpers/Auth";
 export default {
   name: "MainNavigationBar",
   components: {NavigationBarLogo},
-  data() {
-    return {
-      user: {
-        name: "John",
-        surname: "Doe",
-      },
-    }
-  },
   computed: {
-    isLoggedIn() {
-      return false;
+    auth() {
+      return Auth
     }
   },
   methods: {
     goTo(name) {
       this.$router.push({ name });
+    },
+    logout() {
+      this.axios.get('/logout').then(() => {
+        this.auth.clearAuth()
+      }).catch(e => {
+        console.log(e)
+      })
     }
   },
 }
