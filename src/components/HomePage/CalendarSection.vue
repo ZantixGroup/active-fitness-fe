@@ -83,7 +83,7 @@ export default {
           primaryBgText: 'white',
           secondaryBg: '#FFDADA',
           scrollbarColor: '#FFDADA',
-          dateSelectedColor: '#FFDADA',
+          dateSelectedColor: '#ff4545',
         }
       },
     }
