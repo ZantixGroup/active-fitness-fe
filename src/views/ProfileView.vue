@@ -86,11 +86,17 @@ export default {
     }
   },
   mounted() {
+    if (!localStorage.getItem("access_token")) {
+      this.$router.push({ path: "/" });
+    }
+
     this.axios.get('/me').then(response =>{
       this.user = response.data
       if (this.user.role_id === 1) {
         this.user.role_id === "user"
       }
+    }).catch(e => {
+      console.log(e)
     })
   },
   methods: {

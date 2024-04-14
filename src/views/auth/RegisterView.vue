@@ -105,6 +105,7 @@
 
 <script>
 import router from "@/router";
+import Auth from "@/helpers/Auth";
 
 export default {
   data() {
@@ -127,6 +128,11 @@ export default {
         date_of_birthday: null,
         password: null,
       },
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("access_token")) {
+      this.$router.push({ path: "/" });
     }
   },
   methods: {
@@ -153,10 +159,10 @@ export default {
       }
       this.axios.post('/register', this.form).then(response => {
         console.log(response.data)
-        window.localStorage.setItem('access_token', response.data.access_token)
-        this.axios.defaults.headers.authorization = 'Bearer ' + response.data.access_token
-        console.log(this.axios.defaults.headers.authorization)
-        router.push('/');
+        window.localStorage.setItem('access_token', response.data.data.access_token)
+        window.localStorage.setItem('user', JSON.stringify(response.data.data.user))
+        Auth.setAuth(response.data.data.access_token, response.data.data.user)
+        router.push('/')
       }).catch(e => {
         Object.keys(e.response.data.errors).forEach((key) => {
           this.formErrors[key] = e.response.data.errors[key]

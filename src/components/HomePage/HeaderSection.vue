@@ -10,7 +10,7 @@
           We help people improve their fitness
           and get your desired body shape.
         </p>
-        <div v-if="!isLoggedIn" class="hero-section-buttons d-flex mt-12" style="gap: 10px">
+        <div v-if="!auth.isLoggedIn" class="hero-section-buttons d-flex mt-12" style="gap: 10px">
           <v-btn
               variant="flat"
               color="primary"
@@ -41,11 +41,13 @@
 </template>
 
 <script>
-export default {
+import Auth from "@/helpers/Auth";
+
+export default  {
   name: "HeaderSection",
   computed: {
-    isLoggedIn() {
-      return false;
+    auth() {
+      return Auth
     }
   },
   methods: {

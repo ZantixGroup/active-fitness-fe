@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@zantixgroup/vue-calendar": "^1.1.4",
     "axios": "1.6.7",
     "core-js": "^3.8.3",
     "i": "^0.3.7",
