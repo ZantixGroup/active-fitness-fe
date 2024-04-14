@@ -10,6 +10,7 @@
           <div class="inputs">
             <v-text-field
                 v-model="form.name"
+                :rules="rules.firstname"
                 color="#FF4545"
                 label="Name"
                 placeholder="Enter your name"
@@ -20,6 +21,7 @@
             ></v-text-field>
             <v-text-field
                 v-model="form.surname"
+                :rules="rules.lastname"
                 color="#FF4545"
                 label="Surname"
                 type="text"
@@ -30,6 +32,7 @@
             ></v-text-field>
             <v-text-field
                 v-model="form.email"
+                :rules="rules.email"
                 color="#FF4545"
                 label="Email Address"
                 type="email"
@@ -40,6 +43,7 @@
             ></v-text-field>
             <v-text-field
                 v-model="form.phone"
+                :rules="rules.phoneNumber"
                 color="#FF4545"
                 label="Phone number"
                 type="phone"
@@ -50,6 +54,7 @@
             ></v-text-field>
             <v-text-field
                 v-model="form.address"
+                :rules="rules.address"
                 color="#FF4545"
                 label="Address"
                 type="text"
@@ -70,6 +75,7 @@
             ></v-text-field>
             <v-text-field
                 v-model="form.password"
+                :rules="rules.password"
                 color="#FF4545"
                 label="Password"
                 type="password"
@@ -106,6 +112,7 @@
 <script>
 import router from "@/router";
 import Auth from "@/helpers/Auth";
+import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
 
 export default {
   data() {
@@ -128,6 +135,16 @@ export default {
         date_of_birthday: null,
         password: null,
       },
+      rules: {
+        firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
+        lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
+        address: ruleSetGen.text("Lūdzu ievadiet derīgu adresi", true, 3),
+        email: ruleSet.email,
+        phoneNumber: ruleSetGen.phoneNumber(undefined, false),
+        date_of_birth: ruleSetGen.date("Lūdzu ievadiet derīgu dzimšanas datumu", true),
+        password: ruleSetGen.text("Parolei jābūt vismaz 8 rakstzīmju simboliem", true, 8),
+
+      },
     }
   },
   mounted() {
@@ -140,7 +157,7 @@ export default {
       const date = new Date(birth_date);
       const currentDate = new Date();
        if(date >= currentDate || date.getFullYear() < 1900) {
-         return "check"
+         return "Lūdzu ievadiet derīgu datumu"
        }
        return true
     },
