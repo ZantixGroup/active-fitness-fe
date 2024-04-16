@@ -177,7 +177,7 @@ export default {
       this.axios.post('/register', this.form).then(response => {
         console.log(response.data)
         window.localStorage.setItem('access_token', response.data.data.access_token)
-        window.localStorage.setItem('user', JSON.stringify(response.data.data.user))
+        window.localStorage.setItem('user', JSON.stringify(response.data.data.user) ?? '{}')
         Auth.setAuth(response.data.data.access_token, response.data.data.user)
         router.push('/')
       }).catch(e => {

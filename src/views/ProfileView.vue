@@ -1,6 +1,10 @@
 <template>
   <div class="body">
-      <v-form ref="form" lazy-validation @submit.prevent>
+    <div class="header" id="welcomeText" style="display: flex; justify-content: start; align-items: center; width: 100%; gap: 10px">
+      <h1>Hi, {{ auth.user.name }} {{ auth.user.surname }}</h1>
+      <v-btn type="button" @click="showUserFrom" variant="flat" color="primary" >Edit profile</v-btn>
+    </div>
+      <v-form ref="form" lazy-validation @submit.prevent id="userForm">
         <h2 class="form-subtitle">General information</h2>
         <v-container v-if="user">
           <v-row no-gutters>
@@ -84,20 +88,48 @@
             </v-col>
           </v-row>
         </v-container>
-        <div class="d-flex ga-2 pt-3 pa-3 form-submit-buttons">
-          <v-btn type="submit" @submit="save" variant="flat" color="primary" >Saglabāt</v-btn>
-          <v-btn @click="this.$router.go()" variant="text">Atmest izmaiņas</v-btn>
+        <div style="display: flex; justify-content: space-between; width: 100%">
+          <div class="d-flex ga-2 pt-3 pa-3 form-submit-buttons" style="justify-content: start">
+            <v-btn type="submit" @submit="save" variant="flat" color="primary" >Saglabāt</v-btn>
+            <v-btn @click="this.$router.go()" variant="text">Atmest izmaiņas</v-btn>
+          </div>
+          <v-btn style="align-self: end" type="button" @click="closeUserForm" variant="text" width="40px">close</v-btn>
         </div>
       </v-form>
+    <GroupClassesCard
+        v-for="(classes, index) in user_classes"
+        :key="index"
+        :classes="classes"
+    />
+<!--    <div style="display: flex; flex-wrap: wrap; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">-->
+<!--      <p style="font-size: 30px;">Your classes :</p>-->
+<!--      <div style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; padding-top: 30px; gap: 20px">-->
+<!--        <GroupClassesCard-->
+<!--            v-for="(classes, index) in user_classes"-->
+<!--            :key="index"-->
+<!--            :classes="classes"-->
+<!--        />-->
+<!--      </div>-->
+<!--    </div>-->
     </div>
 </template>
 
 <script>
 import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
+import Auth from "@/helpers/Auth";
+import GroupClassesCard from "@/components/GroupClassesCard";
 export default {
+  components: {GroupClassesCard},
+  computed: {
+    auth() {
+      return Auth
+    }
+  },
   data() {
     return {
       user: null,
+      user_id: null,
+      user_classes: [],
       rules: {
         firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
         lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
@@ -115,11 +147,16 @@ export default {
 
     this.axios.get('/me').then(response =>{
       this.user = response.data
+      this.user_id = this.user.id
       if (this.user.role_id === 1) {
         this.user.role_id === "user"
       }
     }).catch(e => {
       console.log(e)
+    })
+    this.axios.get(`/user_group_classes`).then(response => {
+      this.user_classes = response.data.data
+      console.log(response.data.data)
     })
   },
   methods: {
@@ -130,6 +167,14 @@ export default {
       }).catch(error => {
         console.log(error.response.data)
       })
+    },
+    showUserFrom() {
+      document.getElementById('userForm').style.display = "flex";
+      document.getElementById('welcomeText').style.display = "none";
+    },
+    closeUserForm() {
+      document.getElementById('userForm').style.display = "none";
+      document.getElementById('welcomeText').style.display = "block";
     }
   },
 }
@@ -140,16 +185,17 @@ export default {
   width: 100%;
   height: 80vh;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
   justify-content: center;
   align-items: center;
 }
 
 .v-form {
-  width: 1120px;
+  width: 100%;
   margin: auto;
   margin-top: 100px;
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: white;
   flex-wrap: wrap;

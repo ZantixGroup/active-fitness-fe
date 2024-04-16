@@ -17,8 +17,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 // VueCalendar
-import calendar from "@zantixgroup/vue-calendar";
-import "@zantixgroup/vue-calendar/dist/style.css";
+import calendar from "@zantixgroup/vue-calendar"
+import "@zantixgroup/vue-calendar/dist/style.css"
 import Auth from "@/helpers/Auth";
 
 Auth.setToken(localStorage.getItem('access_token'));
