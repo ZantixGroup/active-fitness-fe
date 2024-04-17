@@ -4,7 +4,7 @@
       <h1>Hi, {{ auth.user.name }} {{ auth.user.surname }}</h1>
       <v-btn type="button" @click="showUserForm" variant="flat" color="primary" >Edit profile</v-btn>
     </div>
-      <v-form ref="form" lazy-validation @submit.prevent  id="userForm" @submit="save">
+      <v-form ref="form" lazy-validation @submit.prevent @submit="save" id="userForm">
         <h2 class="form-subtitle">General information</h2>
         <v-container v-if="user" :fluid="true">
           <v-row no-gutters>
