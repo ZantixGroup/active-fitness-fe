@@ -1,20 +1,24 @@
 <template>
   <div class="content">
-    <h1>attendees</h1>
-    <TableContent :table-info="clubTableInfo" :name="`group_class_users/${$route.params.id}`"></TableContent>
+    <h1>Attendees list</h1>
+    <TableContent :table-info="groupClassUsersRequestsTableInfo" :name="`not_accepted_group_class_users/${$route.params.id}`"></TableContent>
+
+    <h1>Attendee attendance list</h1>
+    <TableContent :table-info="groupClassUsersAttendanceTableInfo" :name="`accepted_group_class_users/${$route.params.id}`"></TableContent>
   </div>
 </template>
 
 <script>
-import DeleteAction from "@/Admin/components/form_actions/DeleteAction.vue";
-import EditAction from "@/Admin/components/form_actions/EditAction.vue";
 import TableContent from "@/Admin/components/TableContent.vue";
+import CallbackAction from "@/Admin/components/form_actions/CallbackAction.vue";
+import axios from "axios";
+import { h } from "vue";
 
 export default {
   name: "AttendeeListView",
   components: { TableContent },
   data: () => ({
-    clubTableInfo: {
+    groupClassUsersRequestsTableInfo: {
       headers: [
         {
           title: "ID",
@@ -22,34 +26,19 @@ export default {
           key: "id",
         },
         {
-          title: "Title",
+          title: "Name",
           align: "start",
-          key: "title",
+          key: "user.name",
         },
         {
-          title: "Instructor",
+          title: "Surname",
           align: "start",
-          key: "instructor.surname",
+          key: "user.surname",
         },
         {
-          title: "Starts at",
+          title: "Is accepted",
           align: "start",
-          key: "starts_at",
-        },
-        {
-          title: "Ends At",
-          align: "start",
-          key: "ends_at",
-        },
-        {
-          title: "Studio",
-          align: "start",
-          key: "studio.title",
-        },
-        {
-          title: "Price",
-          align: "start",
-          key: "price",
+          key: "is_accepted",
         },
         {
           title: "Darbības",
@@ -58,7 +47,59 @@ export default {
           key: "actions",
         },
       ],
-      actions: [EditAction, DeleteAction],
+      actions: [
+        h(CallbackAction, {
+          icon: "mdi-check",
+          color: "green",
+          callback: async (data) => {
+            console.log(data);
+            await axios.get(`/accept_user_class_group/${data.user.id}`).then(() => {
+              window.location.reload()
+            });
+          },
+        }),
+      ],
+    },
+    groupClassUsersAttendanceTableInfo: {
+      headers: [
+        {
+          title: "ID",
+          align: "start",
+          key: "id",
+        },
+        {
+          title: "Name",
+          align: "start",
+          key: "user.name",
+        },
+        {
+          title: "Surname",
+          align: "start",
+          key: "user.surname",
+        },
+        {
+          title: "Is not attended",
+          align: "start",
+          key: "is_not_attended",
+        },
+        {
+          title: "Darbības",
+          align: "start",
+          sortable: false,
+          key: "actions",
+        },
+      ],
+      actions: [
+        h(CallbackAction, {
+          icon: "mdi-calendar-refresh-outline",
+          callback: async (data) => {
+            console.log(data);
+            await axios.get(`/user_not_attended/${data.user.id}`).then(() => {
+              window.location.reload()
+            });
+          },
+        }),
+      ],
     },
   }),
 };
