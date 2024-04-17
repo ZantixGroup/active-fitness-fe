@@ -16,9 +16,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 // VueCalendar
-import Auth from "@/helpers/Auth"
 import calendar from "@zantixgroup/vue-calendar"
 import "@zantixgroup/vue-calendar/dist/style.css"
+import Auth from "@/helpers/Auth";
 
 Auth.setToken(localStorage.getItem('access_token'));
 axios.defaults.baseURL = 'http://127.0.0.1/api/';
