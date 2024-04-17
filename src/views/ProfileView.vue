@@ -2,7 +2,7 @@
   <div class="body">
     <div class="header" id="welcomeText" style="display: flex; justify-content: start; align-items: center; width: 100%; gap: 10px">
       <h1>Hi, {{ auth.user.name }} {{ auth.user.surname }}</h1>
-      <v-btn type="button" @click="showUserFrom" variant="flat" color="primary" >Edit profile</v-btn>
+      <v-btn type="button" @click="showUserForm" variant="flat" color="primary" >Edit profile</v-btn>
     </div>
       <v-form ref="form" lazy-validation @submit.prevent id="userForm">
         <h2 class="form-subtitle">General information</h2>
@@ -146,7 +146,6 @@ export default {
     })
     this.axios.get(`/user_group_classes`).then(response => {
       this.user_classes = response.data.data
-      console.log(response.data.data)
     })
   },
   methods: {
@@ -158,7 +157,7 @@ export default {
         console.log(error.response.data)
       })
     },
-    showUserFrom() {
+    showUserForm() {
       document.getElementById('userForm').style.display = "flex";
       document.getElementById('welcomeText').style.display = "none";
     },
