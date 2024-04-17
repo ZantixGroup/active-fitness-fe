@@ -2,11 +2,11 @@
   <v-icon icon="mdi-delete" @click="deleteDialog = true"></v-icon>
   <v-dialog v-model="deleteDialog" width="500px">
     <v-card>
-      <v-card-text> Vai vēlaties dzēst šo ierakstu? </v-card-text>
+      <v-card-text> Are you sure want to delete this row? </v-card-text>
       <v-container class="d-flex justify-space-between align-center">
-        <v-btn color="primary" @click="deleteRow">Dzēst</v-btn>
+        <v-btn color="primary" @click="deleteRow">Delete</v-btn>
         <v-btn color="primary" variant="text" @click="deleteDialog = false"
-          >Aizvērt</v-btn
+          >Close</v-btn
         >
       </v-container>
     </v-card>
@@ -34,13 +34,10 @@ export default {
   },
   methods: {
     async deleteRow() {
-      // await fetch(`${config.baseURL}/${this.name}/${this.data.id}`, {
-      //   method: "DELETE",
-      //   headers: config.headers,
-      // }).then(() => {
-      //   this.deleteDialog = false;
-      //   this.$emit("change");
-      // });
+      this.axios.delete(`/${this.name}/${this.data.id}`).then(() => {
+        this.deleteDialog = false;
+        this.$emit("change");
+      })
     },
   },
 };

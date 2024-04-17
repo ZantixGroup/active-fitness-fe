@@ -63,10 +63,12 @@ export default {
     async submit() {
       const { valid } = await this.$refs.form.validate();
       if (!valid) return;
+      this.failure = false;
       this.loading = true;
       const formData = new FormData();
       for (const key in this.fields) {
         const field = this.$refs[this.fields[key].data.name][0];
+        console.log(field, key, field.value)
         if (field.value === null || field.value === undefined) continue;
         if (typeof field.value === "object") {
           if (field.value[0]) {
@@ -78,6 +80,16 @@ export default {
           formData.append(field.data.name, field.value);
         }
       }
+      await this.axios.post(`/${this.name}`, formData).then(() => {
+        this.success = true;
+        setTimeout(() => {
+          this.$router.push(`/admin/${this.name}/list`);
+        }, 1000);
+      }).catch(() => {
+        this.failure = true;
+      }).finally(() => {
+        this.loading = false;
+      })
       // await fetch(`${config.baseURL}/${this.name}`, {
       //   method: "POST",
       //   headers: config.formDataHeaders,
