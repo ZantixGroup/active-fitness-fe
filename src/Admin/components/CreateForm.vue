@@ -68,7 +68,6 @@ export default {
       const formData = new FormData();
       for (const key in this.fields) {
         const field = this.$refs[this.fields[key].data.name][0];
-        console.log(field, key, field.value)
         if (field.value === null || field.value === undefined) continue;
         if (typeof field.value === "object") {
           if (field.value[0]) {
