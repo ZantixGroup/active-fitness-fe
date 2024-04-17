@@ -1,6 +1,11 @@
 <template>
   <section class="hero-section">
-    <div class="hero-section-content">
+    <div
+      :class="{
+        'hero-section-content': true,
+        'is-mobile': $vuetify.display.smAndDown,
+      }"
+    >
       <div class="hero-section-text">
         <h1 class="hero-section-header">
           Want to improve your health?
@@ -30,7 +35,12 @@
         </div>
       </div>
     </div>
-    <div class="hero-section-image-container">
+    <div 
+      :class="{
+        'hero-section-image-container': true,
+        'd-none': $vuetify.display.smAndDown,
+      }"
+    >
       <img
           class="hero-section-image"
           src="@/assets/images/athlete/athlete.png"
@@ -48,7 +58,7 @@ export default  {
   computed: {
     auth() {
       return Auth
-    }
+    },
   },
   methods: {
     goTo(name) {
@@ -72,6 +82,10 @@ export default  {
   height: min(100vh, 560px);
   width: 50%;
   z-index: 10;
+
+  &.is-mobile {
+    width: 100%;
+  }
 }
 
 .hero-section-text {
