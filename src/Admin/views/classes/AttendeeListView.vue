@@ -52,7 +52,6 @@ export default {
           icon: "mdi-check",
           color: "green",
           callback: async (data) => {
-            console.log(data);
             await axios.get(`/accept_user_class_group/${data.user.id}`).then(() => {
               window.location.reload()
             });
@@ -93,7 +92,6 @@ export default {
         h(CallbackAction, {
           icon: "mdi-calendar-refresh-outline",
           callback: async (data) => {
-            console.log(data);
             await axios.get(`/user_not_attended/${data.user.id}`).then(() => {
               window.location.reload()
             });
