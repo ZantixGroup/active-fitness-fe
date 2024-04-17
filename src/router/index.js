@@ -9,6 +9,27 @@ import UserListView from "@/Admin/views/users/ListView.vue";
 import UserEditView from "@/Admin/views/users/EditView.vue";
 import UserCreateView from "@/Admin/views/users/CreateView.vue";
 
+// ----- clubs ----
+import ClubListView from "@/Admin/views/clubs/ListView.vue";
+import ClubEditView from "@/Admin/views/clubs/EditView.vue";
+import ClubCreateView from "@/Admin/views/clubs/CreateView.vue";
+
+// ----- studios ----
+import StudioListView from "@/Admin/views/studios/ListView.vue";
+import StudioEditView from "@/Admin/views/studios/EditView.vue";
+import StudioCreateView from "@/Admin/views/studios/CreateView.vue";
+
+// ----- group classes ----
+import GroupClassListView from "@/Admin/views/classes/ListView.vue";
+import GroupClassEditView from "@/Admin/views/classes/EditView.vue";
+import GroupClassCreateView from "@/Admin/views/classes/CreateView.vue";
+
+// // ----- feedback ----
+// import FeedbackListView from "@/Admin/views/feedbacks/ListView.vue";
+// import FeedbackEditView from "@/Admin/views/feedbacks/EditView.vue";
+// import FeedbackCreateView from "@/Admin/views/feedbacks/CreateView.vue";
+
+
 // Main
 import HomeView from '../views/HomeView.vue'
 
@@ -85,6 +106,78 @@ const routes = [
     path: "/admin/users/edit/:id",
     name: "admin-users-edit",
     component: UserEditView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/clubs/list",
+    name: "admin-clubs-list",
+    component: ClubListView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/clubs/create",
+    name: "admin-clubs-create",
+    component: ClubCreateView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/clubs/edit/:id",
+    name: "admin-clubs-edit",
+    component: ClubEditView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/studios/list",
+    name: "admin-studios-list",
+    component: StudioListView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/studios/create",
+    name: "admin-studios-create",
+    component: StudioCreateView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/studios/edit/:id",
+    name: "admin-studios-edit",
+    component: StudioEditView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/classes/list",
+    name: "admin-classes-list",
+    component: GroupClassListView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/classes/create",
+    name: "admin-classes-create",
+    component: GroupClassCreateView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/classes/edit/:id",
+    name: "admin-classes-edit",
+    component: GroupClassEditView,
     meta: {
       layout: AdminLayout,
     },

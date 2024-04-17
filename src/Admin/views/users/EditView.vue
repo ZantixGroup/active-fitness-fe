@@ -1,6 +1,6 @@
 <template>
   <v-container class="form-container rounded-lg">
-    <h1>Labot lietotāju</h1>
+    <h1>Edit user</h1>
     <EditForm :fields="fields" name="users" />
   </v-container>
 </template>
@@ -8,40 +8,32 @@
 <script>
 import { markRaw } from "vue";
 import TextField from "@/Admin/components/form/TextField.vue";
-import ImagePickField from "@/Admin/components/form/ImagePickField.vue";
 import SelectField from "@/Admin/components/form/SelectField.vue";
-
 import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 import EditForm from "@/Admin/components/EditForm.vue";
+import DatePickField from "@/Admin/components/form/DatePickField.vue";
+
 export default {
   name: "UserEditView",
   components: { EditForm },
   data() {
     return {
       fields: {
-        avatar: {
-          component: markRaw(ImagePickField),
-          data: {
-            label: "Izvēlieties profila attēlu",
-            name: "avatar",
-            size: 200,
-          },
-        },
-        firstname: {
+        name: {
           component: markRaw(TextField),
           data: {
-            label: "Vārds",
-            placeholder: "Ievadiet vārdu",
-            name: "firstname",
+            label: "Name",
+            placeholder: "Enter name",
+            name: "name",
             rules: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
           },
         },
-        lastname: {
+        surname: {
           component: markRaw(TextField),
           data: {
-            label: "Uzvārds",
-            placeholder: "Ievadiet uzvārdu",
-            name: "lastname",
+            label: "Surname",
+            placeholder: "Enter surname",
+            name: "surname",
             rules: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
           },
         },
@@ -49,34 +41,52 @@ export default {
           component: markRaw(TextField),
           data: {
             label: "E-pasts",
-            placeholder: "Ievadiet e-pastu",
+            placeholder: "Enter email",
             name: "email",
             rules: ruleSet.email,
           },
         },
-        phone_number: {
+        password: {
           component: markRaw(TextField),
           data: {
-            label: "Telefona numurs",
-            placeholder: "Ievadiet telefona numuru",
-            name: "phone_number",
+            label: "Password",
+            placeholder: "Enter password",
+            name: "password",
+            rules: ruleSetGen.text(undefined, false, 9),
+          },
+        },
+        phone: {
+          component: markRaw(TextField),
+          data: {
+            label: "Phone number",
+            placeholder: "Enter phone number",
+            name: "phone",
             rules: ruleSetGen.phoneNumber(undefined, false),
           },
         },
-        personal_code: {
+        address: {
           component: markRaw(TextField),
           data: {
-            label: "Personas kods",
-            placeholder: "Ievadiet personas kodu",
-            name: "personal_code",
-            rules: ruleSetGen.persCode(undefined, false),
+            label: "Address",
+            placeholder: "Enter address",
+            name: "address",
+            rules: ruleSetGen.text(undefined, false, 3),
           },
         },
-        role: {
+        date_of_birthday: {
+          component: markRaw(DatePickField),
+          data: {
+            label: "Birthday",
+            placeholder: "Enter birthday",
+            name: "date_of_birthday",
+            rules: ruleSetGen.text(undefined, false, 3),
+          },
+        },
+        role_id: {
           component: markRaw(SelectField),
           data: {
-            label: "Loma",
-            placeholder: "Izvēlieties lomu",
+            label: "Role",
+            placeholder: "Select role",
             name: "role_id",
             items: [],
             itemTitle: "name",
@@ -87,6 +97,25 @@ export default {
     };
   },
   async created() {
+    this.axios.get(`/users/${this.$route.params.id}`).then(response => {
+      for (const key in this.fields) {
+        this.fields[key].data.value = response.data.data[key];
+      }
+    })
+    this.fields.role_id.data.items = [
+      {
+        id: 1,
+        name: 'User'
+      },
+      {
+        id: 2,
+        name: 'Instructor'
+      },
+      {
+        id: 3,
+        name: 'Admin'
+      },
+    ]
     // await fetch(`${config.baseURL}/users/${this.$route.params.id}`, {
     //   method: "GET",
     //   headers: config.headers,

@@ -107,7 +107,6 @@
 <script>
 import Auth from "@/helpers/Auth";
 import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
-import Auth from "@/helpers/Auth";
 import GroupClassesCard from "@/components/GroupClassesCard";
 export default {
   components: {GroupClassesCard},

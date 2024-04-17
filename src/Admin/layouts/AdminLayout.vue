@@ -75,23 +75,68 @@ export default {
   data: () => ({
     sideNavbarItems: [
       {
-        title: "Galvenais panelis",
+        title: "Main panel",
         height: "56px",
         prependIcon: "mdi-view-dashboard",
         route: "/admin",
       },
       {
-        title: "Lietotāji",
+        title: "Users",
         height: "56px",
         prependIcon: "mdi-account-multiple",
         sections: [
           {
-            title: "Saraksts",
+            title: "List",
             route: "/admin/users/list",
           },
           {
-            title: "Izveidot",
+            title: "Create",
             route: "/admin/users/create",
+          },
+        ],
+      },
+      {
+        title: "Clubs",
+        height: "56px",
+        prependIcon: "mdi-home-city",
+        sections: [
+          {
+            title: "List",
+            route: "/admin/clubs/list",
+          },
+          {
+            title: "Create",
+            route: "/admin/clubs/create",
+          },
+        ],
+      },
+      {
+        title: "Studios",
+        height: "56px",
+        prependIcon: "mdi-floor-plan",
+        sections: [
+          {
+            title: "List",
+            route: "/admin/studios/list",
+          },
+          {
+            title: "Create",
+            route: "/admin/studios/create",
+          },
+        ],
+      },
+      {
+        title: "Group classes",
+        height: "56px",
+        prependIcon: "mdi-account-group",
+        sections: [
+          {
+            title: "List",
+            route: "/admin/classes/list",
+          },
+          {
+            title: "Create",
+            route: "/admin/classes/create",
           },
         ],
       },

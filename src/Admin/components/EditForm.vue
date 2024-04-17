@@ -5,7 +5,7 @@
       v-show="success"
       type="success"
       class="mb-5"
-      text="Tika labots ieraksts"
+      text="Row was edited"
     ></v-alert>
 
     <!--  Failure message  -->
@@ -13,7 +13,7 @@
       v-show="failure"
       type="error"
       class="mb-5"
-      text="Notika kļūda"
+      text="An error occurred"
     ></v-alert>
 
     <!--  Form content  -->
@@ -33,7 +33,7 @@
       type="submit"
       block
       class="mt-5"
-      text="Labot"
+      text="Edit"
       @click="submit"
     ></v-btn>
   </v-form>
@@ -77,6 +77,17 @@ export default {
           formData.append(field.data.name, field.value);
         }
       }
+
+      await this.axios.post(`/${this.name}/${this.$route.params.id}?_method=PUT`, formData).then(() => {
+        this.success = true;
+        setTimeout(() => {
+          this.$router.push(`/admin/${this.name}/list`);
+        }, 1000);
+      }).catch(() => {
+        this.failure = true;
+      }).finally(() => {
+        this.loading = false;
+      });
       // await fetch(
       //   `${config.baseURL}/${this.name}/${this.$route.params.id}?_method=PUT`,
       //   {

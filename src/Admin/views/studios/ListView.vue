@@ -1,7 +1,7 @@
 <template>
   <div class="content">
-    <h1>Users</h1>
-    <TableContent :table-info="userTableInfo" name="users"></TableContent>
+    <h1>Studios</h1>
+    <TableContent :table-info="clubTableInfo" name="studios"></TableContent>
   </div>
 </template>
 
@@ -11,10 +11,10 @@ import EditAction from "@/Admin/components/form_actions/EditAction.vue";
 import DeleteAction from "@/Admin/components/form_actions/DeleteAction.vue";
 
 export default {
-  name: "UserListView",
+  name: "StudioListView",
   components: { TableContent },
   data: () => ({
-    userTableInfo: {
+    clubTableInfo: {
       headers: [
         {
           title: "ID",
@@ -22,24 +22,19 @@ export default {
           key: "id",
         },
         {
-          title: "Name",
+          title: "Title",
           align: "start",
-          key: "name",
+          key: "title",
         },
         {
-          title: "Surname",
+          title: "Capacity",
           align: "start",
-          key: "surname",
+          key: "capacity",
         },
         {
-          title: "Email",
+          title: "Club",
           align: "start",
-          key: "email",
-        },
-        {
-          title: "Phone number",
-          align: "start",
-          key: "phone",
+          key: "club.title",
         },
         {
           title: "Darbības",

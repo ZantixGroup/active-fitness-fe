@@ -63,6 +63,7 @@ export default {
     async submit() {
       const { valid } = await this.$refs.form.validate();
       if (!valid) return;
+      this.failure = false;
       this.loading = true;
       const formData = new FormData();
       for (const key in this.fields) {
@@ -78,6 +79,16 @@ export default {
           formData.append(field.data.name, field.value);
         }
       }
+      await this.axios.post(`/${this.name}`, formData).then(() => {
+        this.success = true;
+        setTimeout(() => {
+          this.$router.push(`/admin/${this.name}/list`);
+        }, 1000);
+      }).catch(() => {
+        this.failure = true;
+      }).finally(() => {
+        this.loading = false;
+      })
       // await fetch(`${config.baseURL}/${this.name}`, {
       //   method: "POST",
       //   headers: config.formDataHeaders,

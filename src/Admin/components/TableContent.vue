@@ -112,24 +112,15 @@ export default {
       this.loading = true;
       this.pagination.page = data.page;
       this.pagination.itemsPerPage = data.itemsPerPage;
-      // await fetch(
-      //   `${config.baseURL}/${this.name}?page=${data.page}&pagination=${data.itemsPerPage}`,
-      //   {
-      //     method: "GET",
-      //     headers: config.headers,
-      //   },
-      // )
-      //   .then((response) => response.json())
-      //   .then((response) => {
-      //     this.pagination.itemsPerPage = response.meta.per_page;
-      //     this.pagination.current_page = response.meta.current_page;
-      //     this.pagination.last_page = response.meta.last_page;
-      //     this.pagination.total = response.meta.total;
-      //     this.content = response.data;
-      //   })
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
+      await this.axios.get(`/${this.name}?page=${data.page}&pagination=${data.itemsPerPage}`).then((response) => {
+        this.pagination.itemsPerPage = response.data.meta.per_page;
+        this.pagination.current_page = response.data.meta.current_page;
+        this.pagination.last_page = response.data.meta.last_page;
+        this.pagination.total = response.data.meta.total;
+        this.content = response.data.data;
+      }).finally(() => {
+        this.loading = false;
+      })
     },
     getStatusColor(status) {
       switch (status) {
