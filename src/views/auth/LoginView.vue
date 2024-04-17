@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import router from "@/router";
 import Auth from "@/helpers/Auth";
-import {ruleSet, ruleSetGen} from "/src/helpers/rules.js";
+import router from "@/router";
+import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
 
 export default {
   data() {
@@ -114,7 +114,6 @@ export default {
 <style scoped>
 .body {
   width: 100%;
-  height: 80vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

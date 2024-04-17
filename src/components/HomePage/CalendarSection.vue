@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import {VueCalendar} from "@zantixgroup/vue-calendar";
 import Auth from "@/helpers/Auth";
+import { VueCalendar } from "@zantixgroup/vue-calendar";
 export default {
   name: "CalendarSection",
   components: {VueCalendar},

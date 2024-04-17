@@ -1,10 +1,10 @@
 <template>
   <div class="body">
-      <v-form ref="form" lazy-validation @submit.prevent>
+      <v-form ref="form" lazy-validation @submit.prevent @submit="save">
         <h2 class="form-subtitle">General information</h2>
-        <v-container v-if="user">
+        <v-container v-if="user" :fluid="true">
           <v-row no-gutters>
-            <v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
                   v-model="user.name"
                   :rules="rules.firstname"
@@ -16,7 +16,7 @@
                   :active="true"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
                   v-model="user.surname"
                   :rules="rules.lastname"
@@ -30,7 +30,7 @@
             </v-col>
           </v-row>
           <v-row no-gutters>
-            <v-col>
+            <v-col cols="12" sm="6">
                 <v-text-field
                     v-model="user.email"
                     :rules="rules.email"
@@ -42,7 +42,7 @@
                     :active="true"
                 ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm="6">
                 <v-text-field
                     v-model="user.phone"
                     :rules="rules.phoneNumber"
@@ -56,7 +56,7 @@
               </v-col>
           </v-row>
           <v-row no-gutters>
-            <v-col>
+            <v-col cols="12" sm="6">
                 <v-text-field
                     v-model="user.address"
                     :rules="rules.address"
@@ -68,7 +68,7 @@
                     :active="true"
                 ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm="6">
                 <v-text-field
                     v-model="user.date_of_birthday"
                     :rules="rules.date_of_birth"
@@ -85,7 +85,7 @@
           </v-row>
         </v-container>
         <div class="d-flex ga-2 pt-3 pa-3 form-submit-buttons">
-          <v-btn type="submit" @submit="save" variant="flat" color="primary" >Saglabāt</v-btn>
+          <v-btn type="submit" variant="flat" color="primary" >Saglabāt</v-btn>
           <v-btn @click="this.$router.go()" variant="text">Atmest izmaiņas</v-btn>
         </div>
       </v-form>
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import Auth from "@/helpers/Auth";
 import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
 export default {
   data() {
@@ -126,7 +127,7 @@ export default {
     save() {
       this.$refs.form.validate();
       this.axios.put(`/profile_update`, this.user).then(response => {
-        console.log(response.data)
+        Auth.setUser(response.data.data)
       }).catch(error => {
         console.log(error.response.data)
       })
@@ -138,7 +139,6 @@ export default {
 <style scoped>
 .body {
   width: 100%;
-  height: 80vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
