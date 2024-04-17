@@ -12,7 +12,7 @@
         </v-btn>
         <v-btn
             variant="flat"
-            class="text-uppercase ml-2"
+            class="text-uppercase ml-2 text-black"
             @click="goTo('login')"
         >
           Log in
@@ -52,6 +52,7 @@ export default {
     logout() {
       this.axios.get('/logout').then(() => {
         this.auth.clearAuth()
+        this.$router.push("/")
       }).catch(e => {
         console.log(e)
       })

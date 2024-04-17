@@ -1,5 +1,5 @@
-import {reactive} from 'vue'
 import axios from "axios";
+import { reactive } from 'vue';
 
 export default class Auth {
     static dataStore = reactive({
@@ -26,11 +26,12 @@ export default class Auth {
     }
 
     static setUser(user) {
-        this.dataStore.user = user;
+      this.dataStore.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
     }
 
     static setToken(token) {
-        this.dataStore.accessToken = token;
+      this.dataStore.accessToken = token;
     }
 
     static clearAuth() {
