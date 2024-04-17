@@ -101,16 +101,6 @@
         :key="index"
         :classes="classes"
     />
-<!--    <div style="display: flex; flex-wrap: wrap; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">-->
-<!--      <p style="font-size: 30px;">Your classes :</p>-->
-<!--      <div style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; padding-top: 30px; gap: 20px">-->
-<!--        <GroupClassesCard-->
-<!--            v-for="(classes, index) in user_classes"-->
-<!--            :key="index"-->
-<!--            :classes="classes"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </div>-->
     </div>
 </template>
 
