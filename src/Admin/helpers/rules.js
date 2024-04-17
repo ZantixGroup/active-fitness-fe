@@ -45,7 +45,7 @@ const ruleSet = {
           !v ||
           !v.length ||
           ["image/png", "image/jpeg", "image/jpg"].includes(v[0].type) ||
-          "Upload png or jpeg file"
+          "Upload .png or .jpeg file"
       );
     },
   ],

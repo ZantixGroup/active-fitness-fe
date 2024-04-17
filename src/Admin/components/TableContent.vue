@@ -118,7 +118,6 @@ export default {
         this.pagination.last_page = response.data.meta.last_page;
         this.pagination.total = response.data.meta.total;
         this.content = response.data.data;
-        console.log(this.content);
       }).finally(() => {
         this.loading = false;
       })

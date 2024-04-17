@@ -40,14 +40,6 @@ export default {
       value: null,
     }
   },
-  watch: {
-    props: {
-      handler(newVal) {
-        console.log(newVal);
-      },
-      deep: true
-    }
-  },
   created() {
     this.value = this.data.value;
   },

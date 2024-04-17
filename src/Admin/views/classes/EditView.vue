@@ -97,7 +97,6 @@ export default {
         response.data.data.instructor.full_name = `${response.data.data.instructor.name} ${response.data.data.instructor.surname}` ;
         for (const key in this.fields) {
           this.fields[key].data.value = response.data.data[key];
-          console.log(key, response.data.data[key]);
         }
       })
 

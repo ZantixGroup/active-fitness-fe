@@ -13,7 +13,7 @@
       v-show="failure"
       type="error"
       class="mb-5"
-      text="an error occurred"
+      text="An error occurred"
     ></v-alert>
 
     <!--  Form content  -->
