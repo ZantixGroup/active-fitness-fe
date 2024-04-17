@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     redirect() {
-      console.log(this.route);
       this.$router.push(`/admin/${this.name}/${this.route}/${this.data.id}`);
     },
   },
