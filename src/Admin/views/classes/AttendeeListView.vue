@@ -1,19 +1,17 @@
 <template>
   <div class="content">
-    <h1>Group classes</h1>
-    <TableContent :table-info="clubTableInfo" name="classes"></TableContent>
+    <h1>attendees</h1>
+    <TableContent :table-info="clubTableInfo" :name="`group_class_users/${$route.params.id}`"></TableContent>
   </div>
 </template>
 
 <script>
 import DeleteAction from "@/Admin/components/form_actions/DeleteAction.vue";
 import EditAction from "@/Admin/components/form_actions/EditAction.vue";
-import RedirectAction from "@/Admin/components/form_actions/RedirectAction.vue";
 import TableContent from "@/Admin/components/TableContent.vue";
-import { h } from "vue";
 
 export default {
-  name: "ClassListView",
+  name: "AttendeeListView",
   components: { TableContent },
   data: () => ({
     clubTableInfo: {
@@ -60,14 +58,7 @@ export default {
           key: "actions",
         },
       ],
-      actions: [
-        EditAction,
-        DeleteAction,
-        h(
-          RedirectAction,
-          { route: 'view-attendees' }
-        )
-      ],
+      actions: [EditAction, DeleteAction],
     },
   }),
 };
