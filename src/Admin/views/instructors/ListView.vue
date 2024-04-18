@@ -1,19 +1,19 @@
 <template>
   <div class="content">
-    <h1>Group classes</h1>
-    <TableContent :table-info="clubTableInfo" name="classes"></TableContent>
+    <h1>Clubs</h1>
+    <TableContent :table-info="clubTableInfo" name="instructors"></TableContent>
   </div>
 </template>
 
 <script>
-import DeleteAction from "@/Admin/components/form_actions/DeleteAction.vue";
-import EditAction from "@/Admin/components/form_actions/EditAction.vue";
-import RedirectAction from "@/Admin/components/form_actions/RedirectAction.vue";
 import TableContent from "@/Admin/components/TableContent.vue";
-import { h } from "vue";
+import EditAction from "@/Admin/components/form_actions/EditAction.vue";
+import DeleteAction from "@/Admin/components/form_actions/DeleteAction.vue";
+import {h} from "vue";
+import RedirectAction from "@/Admin/components/form_actions/RedirectAction.vue";
 
 export default {
-  name: "ClassListView",
+  name: "InstructorsListView",
   components: { TableContent },
   data: () => ({
     clubTableInfo: {
@@ -24,37 +24,22 @@ export default {
           key: "id",
         },
         {
-          title: "Title",
+          title: "Name",
           align: "start",
-          key: "title",
+          key: "name",
         },
         {
-          title: "Instructor",
+          title: "Surname",
           align: "start",
-          key: "instructor.surname",
+          key: "surname",
         },
         {
-          title: "Starts at",
+          title: "Email",
           align: "start",
-          key: "starts_at",
+          key: "email",
         },
         {
-          title: "Ends At",
-          align: "start",
-          key: "ends_at",
-        },
-        {
-          title: "Studio",
-          align: "start",
-          key: "studio.title",
-        },
-        {
-          title: "Price",
-          align: "start",
-          key: "price",
-        },
-        {
-          title: "Actions",
+          title: "Darbības",
           align: "start",
           sortable: false,
           key: "actions",
@@ -65,7 +50,11 @@ export default {
         DeleteAction,
         h(
           RedirectAction,
-          { route: 'view-attendees' }
+          {
+            name: 'asd',
+            icon: 'mdi-currency-usd',
+            route: 'salary',
+          }
         )
       ],
     },

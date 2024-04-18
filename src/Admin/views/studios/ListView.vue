@@ -37,7 +37,7 @@ export default {
           key: "club.title",
         },
         {
-          title: "Darbības",
+          title: "Actions",
           align: "start",
           sortable: false,
           key: "actions",

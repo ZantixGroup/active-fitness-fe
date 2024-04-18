@@ -1,7 +1,7 @@
 <template>
   <div class="content">
-    <h1>Users</h1>
-    <TableContent :table-info="userTableInfo" name="users"></TableContent>
+    <h1>Clubs</h1>
+    <TableContent :table-info="clubTableInfo" :name="`instructor_salaries/${$route.params.id}`"></TableContent>
   </div>
 </template>
 
@@ -9,12 +9,14 @@
 import TableContent from "@/Admin/components/TableContent.vue";
 import EditAction from "@/Admin/components/form_actions/EditAction.vue";
 import DeleteAction from "@/Admin/components/form_actions/DeleteAction.vue";
+import {h} from "vue";
+import RedirectAction from "@/Admin/components/form_actions/RedirectAction.vue";
 
 export default {
-  name: "UserListView",
+  name: "InstructorSalaryListView",
   components: { TableContent },
   data: () => ({
-    userTableInfo: {
+    clubTableInfo: {
       headers: [
         {
           title: "ID",
@@ -22,33 +24,32 @@ export default {
           key: "id",
         },
         {
-          title: "Name",
-          align: "start",
-          key: "name",
-        },
-        {
           title: "Surname",
           align: "start",
-          key: "surname",
+          key: "user.surname",
         },
         {
-          title: "Email",
+          title: "Period",
           align: "start",
-          key: "email",
+          key: "period",
         },
         {
-          title: "Phone number",
+          title: "Amount €",
           align: "start",
-          key: "phone",
-        },
-        {
-          title: "Actions",
-          align: "start",
-          sortable: false,
-          key: "actions",
+          key: "amount",
         },
       ],
-      actions: [EditAction, DeleteAction],
+      actions: [
+        EditAction,
+        DeleteAction,
+        h(
+          RedirectAction,
+          {
+            icon: 'mdi-currency-usd',
+            route: 'view-attendees',
+          }
+        )
+      ],
     },
   }),
 };
