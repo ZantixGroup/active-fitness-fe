@@ -142,11 +142,9 @@ export default {
           data: [],
         },
       ],
-      colors: ["#eee",],
       user: null,
       user_id: null,
       user_classes: [],
-      user_salaries: [],
       rules: {
         firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
         lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
@@ -174,14 +172,11 @@ export default {
       this.user_classes = response.data.data
     })
     this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
-      this.user_salaries = response.data.data
       const newData = [];
       const newCategories = [];
-      this.series = response.data.data
-      this.user_salaries.forEach((element) => {
+      response.data.data.forEach((element) => {
         newData.push(element.amount);
         newCategories.push(new Date(element.period).toLocaleString('en',{month:"long"}));
-        console.log(newCategories)
       });
       this.series = [{
         data: newData
@@ -189,7 +184,6 @@ export default {
       this.chartOptions = {
         labels: newCategories
       }
-      console.log(this.user_salaries)
     })
   },
   methods: {
