@@ -20,6 +20,9 @@ import calendar from "@zantixgroup/vue-calendar"
 import "@zantixgroup/vue-calendar/dist/style.css"
 import Auth from "@/helpers/Auth";
 
+// ApexCharts
+import VueApexCharts from "vue3-apexcharts"
+
 Auth.setToken(localStorage.getItem('access_token'));
 axios.defaults.baseURL = 'http://127.0.0.1/api/';
 axios.defaults.headers.authorization = 'Bearer ' + Auth.accessToken;
@@ -43,4 +46,4 @@ const vuetify = createVuetify({
     },
 })
 
-createApp(App).use(VueAxios, axios).use(vuetify).use(store).use(router).use(calendar).mount('#app')
+createApp(App).use(VueAxios, axios).use(vuetify).use(store).use(router).use(calendar).use(VueApexCharts).mount('#app')

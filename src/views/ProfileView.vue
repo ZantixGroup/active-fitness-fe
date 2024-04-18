@@ -96,6 +96,17 @@
           <v-btn style="align-self: end" type="button" @click="closeUserForm" variant="text" width="40px">close</v-btn>
         </div>
       </v-form>
+    <div v-if="auth.user.role_id === 2" class="salaries-graphic">
+      <h1>Salaries :</h1>
+      <apexchart
+          id="slaries-chart"
+          width="500"
+          type="area"
+          color="primary"
+          :options="chartOptions"
+          :series="series"
+      ></apexchart>
+    </div>
     <GroupClassesCard
         v-for="(classes, index) in user_classes"
         :key="index"
@@ -117,9 +128,25 @@ export default {
   },
   data() {
     return {
+      chart: {
+        id: "slaries-chart",
+      },
+      chartOptions: {
+        xaxis: {
+          categories: [],
+        },
+      },
+      series: [
+        {
+          name: "salaries",
+          data: [],
+        },
+      ],
+      colors: ["#eee",],
       user: null,
       user_id: null,
       user_classes: [],
+      user_salaries: [],
       rules: {
         firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
         lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
@@ -134,7 +161,6 @@ export default {
     if (!localStorage.getItem("access_token")) {
       this.$router.push({ path: "/" });
     }
-
     this.axios.get('/me').then(response =>{
       this.user = response.data
       this.user_id = this.user.id
@@ -146,6 +172,24 @@ export default {
     })
     this.axios.get(`/user_group_classes`).then(response => {
       this.user_classes = response.data.data
+    })
+    this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
+      this.user_salaries = response.data.data
+      const newData = [];
+      const newCategories = [];
+      this.series = response.data.data
+      this.user_salaries.forEach((element) => {
+        newData.push(element.amount);
+        newCategories.push(new Date(element.period).toLocaleString('en',{month:"long"}));
+        console.log(newCategories)
+      });
+      this.series = [{
+        data: newData
+      }]
+      this.chartOptions = {
+        labels: newCategories
+      }
+      console.log(this.user_salaries)
     })
   },
   methods: {
@@ -228,5 +272,10 @@ export default {
   text-transform: none;
   font-weight: 500;
   font-size: 16px;
+}
+.salaries-graphic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
