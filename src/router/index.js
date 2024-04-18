@@ -9,6 +9,10 @@ import UserCreateView from "@/Admin/views/users/CreateView.vue";
 import UserEditView from "@/Admin/views/users/EditView.vue";
 import UserListView from "@/Admin/views/users/ListView.vue";
 
+// ----- instructors ----
+import InstructorListView from "@/Admin/views/instructors/ListView.vue";
+import InstructorSalaryListView from "@/Admin/views/instructors/SalaryListView.vue";
+
 // ----- clubs ----
 import ClubCreateView from "@/Admin/views/clubs/CreateView.vue";
 import ClubEditView from "@/Admin/views/clubs/EditView.vue";
@@ -108,6 +112,22 @@ const routes = [
     path: "/admin/users/edit/:id",
     name: "admin-users-edit",
     component: UserEditView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/instructors/list",
+    name: "admin-instructors-list",
+    component: InstructorListView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/instructors/salary/:id",
+    name: "admin-instructors-salary",
+    component: InstructorSalaryListView,
     meta: {
       layout: AdminLayout,
     },
