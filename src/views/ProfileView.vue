@@ -96,6 +96,15 @@
           <v-btn style="align-self: end" type="button" @click="closeUserForm" variant="text" width="40px">close</v-btn>
         </div>
       </v-form>
+    <div v-if="auth.user.role_id === 2" class="salaries-graphic">
+      <h1>Salaries :</h1>
+      <apexchart
+          id="slaries-chart"
+          type="area"
+          :options="chartOptions"
+          :series="series"
+      ></apexchart>
+    </div>
     <GroupClassesCard
         v-for="(classes, index) in user_classes"
         :key="index"
@@ -117,6 +126,20 @@ export default {
   },
   data() {
     return {
+      chart: {
+        id: "slaries-chart",
+      },
+      chartOptions: {
+        xaxis: {
+          categories: [],
+        },
+      },
+      series: [
+        {
+          name: "salaries",
+          data: [],
+        },
+      ],
       user: null,
       user_id: null,
       user_classes: [],
@@ -134,7 +157,6 @@ export default {
     if (!localStorage.getItem("access_token")) {
       this.$router.push({ path: "/" });
     }
-
     this.axios.get('/me').then(response =>{
       this.user = response.data
       this.user_id = this.user.id
@@ -146,6 +168,20 @@ export default {
     })
     this.axios.get(`/user_group_classes`).then(response => {
       this.user_classes = response.data.data
+    })
+    this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
+      const newData = [];
+      const newCategories = [];
+      response.data.data.forEach((element) => {
+        newData.push(element.amount);
+        newCategories.push(new Date(element.period).toLocaleString('en',{month:"long"}));
+      });
+      this.series = [{
+        data: newData
+      }]
+      this.chartOptions = {
+        labels: newCategories
+      }
     })
   },
   methods: {
@@ -178,7 +214,9 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
+#slaries-chart{
+  width: 100%;
+}
 .v-form {
   width: 100%;
   margin: auto;
@@ -228,5 +266,11 @@ export default {
   text-transform: none;
   font-weight: 500;
   font-size: 16px;
+}
+.salaries-graphic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 </style>
