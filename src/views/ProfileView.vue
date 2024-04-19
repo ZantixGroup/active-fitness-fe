@@ -101,7 +101,6 @@
       <apexchart
           id="slaries-chart"
           type="area"
-          color="primary"
           :options="chartOptions"
           :series="series"
       ></apexchart>
