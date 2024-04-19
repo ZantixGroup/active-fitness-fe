@@ -100,7 +100,6 @@
       <h1>Salaries :</h1>
       <apexchart
           id="slaries-chart"
-          width="500"
           type="area"
           color="primary"
           :options="chartOptions"
@@ -216,7 +215,9 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
+#slaries-chart{
+  width: 100%;
+}
 .v-form {
   width: 100%;
   margin: auto;
@@ -271,5 +272,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
 }
 </style>
