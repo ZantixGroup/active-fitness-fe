@@ -24,7 +24,6 @@ export default {
   mounted() {
     this.axios.get(`/most_popular_class`).then(response => {
       this.most_frequent_class = response.data[0]
-      console.log(this.most_frequent_class)
     })
   }
 }
