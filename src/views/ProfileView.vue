@@ -106,17 +106,17 @@
       ></apexchart>
     </div>
     <GroupClassesCard
-        v-for="(classes, index) in user_classes"
-        :key="index"
-        :classes="classes"
+      v-for="(classes, index) in user_classes"
+      :key="index"
+      :classes="classes"
     />
     </div>
 </template>
 
 <script>
-import Auth from "@/helpers/Auth";
-import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
-import GroupClassesCard from "@/components/GroupClassesCard";
+import GroupClassesCard from "@/components/GroupClassesCard"
+import Auth from "@/helpers/Auth"
+import { ruleSet, ruleSetGen } from "/src/helpers/rules.js"
 export default {
   components: {GroupClassesCard},
   computed: {

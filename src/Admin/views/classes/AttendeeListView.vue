@@ -58,6 +58,16 @@ export default {
             });
           },
         }),
+        h(CallbackAction, {
+          icon: "mdi-trash-can-outline",
+          color: "red",
+          callback: async (data) => {
+            console.log(data.user.id)
+            await axios.delete(`/delete_group_class_users/${data.id}`).then(() => {
+              window.location.reload()
+            });
+          },
+        }),
       ],
     },
     groupClassUsersAttendanceTableInfo: {
@@ -94,6 +104,15 @@ export default {
           icon: "mdi-calendar-refresh-outline",
           callback: async (data) => {
             await axios.get(`/user_not_attended/${data.id}`).then(() => {
+              window.location.reload()
+            });
+          },
+        }),
+        h(CallbackAction, {
+          icon: "mdi-close",
+          color: "red",
+          callback: async (data) => {
+            await axios.get(`/decline_group_class_users/${data.id}`).then(() => {
               window.location.reload()
             });
           },
