@@ -166,7 +166,7 @@ export default {
     }).catch(e => {
       console.log(e)
     })
-    this.axios.get(`/user_group_classes`).then(response => {
+    this.axios.get(`/profile_user_group_classes`).then(response => {
       this.user_classes = response.data.data
     })
     this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
