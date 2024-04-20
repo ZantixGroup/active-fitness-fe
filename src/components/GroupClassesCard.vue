@@ -97,7 +97,6 @@ export default {
       }).catch(e => {
         Object.keys(e.response.data.errors).forEach((key) => {
           this.formErrors[key] = e.response.data.errors[key]
-          console.log(this.formErrors)
         })
       })
     },
