@@ -52,7 +52,6 @@ export default {
           icon: "mdi-check",
           color: "green",
           callback: async (data) => {
-            console.log(data.user.id)
             await axios.get(`/accept_user_class_group/${data.id}`).then(() => {
               window.location.reload()
             });
