@@ -44,6 +44,18 @@
         </v-chip>
       </template>
 
+      <template #[`item.is_accepted`]="{ value }">
+        <v-chip :color="value ? 'green' : 'red'">
+          {{ booleanValue(value) }}
+        </v-chip>
+      </template>
+
+      <template #[`item.is_not_attended`]="{ value }">
+        <v-chip v-if="value" color="red">
+          {{ booleanValue(value) }}
+        </v-chip>
+      </template>
+
       <template #[`item.order_completed`]="{ value }">
         <v-chip :color="value ? 'green' : 'red'">
           {{ booleanValue(value) }}
@@ -95,11 +107,11 @@ export default {
   methods: {
     booleanValue(value) {
       if (value === true) {
-        return "Ir";
+        return "True";
       } else if (value === false) {
-        return "Nav";
+        return "False";
       }
-      return "Nav noteikts";
+      return "Undetermined";
     },
     actionChange() {
       this.$forceUpdate();

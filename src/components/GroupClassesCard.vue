@@ -1,17 +1,21 @@
 <template>
   <v-card
       :class="[
-          'mx-auto',
-          {
-            'asd': classes.is_accepted
-          }
+        'mx-auto',
+        {
+          'is_accepted': classes.is_accepted && canCancelParticipation,
+        }
       ]"
       width="100%"
       hover
   >
     <v-card-item>
-      <v-card-title style=" color: #FF4545">
-        {{classes.group_class.title}}
+      <v-card-title class="d-flex overflow-visible" style="color: #FF4545">
+        {{classes.group_class.title}}<span style="color: gray; margin-left: 15px; font-size: 15px; font-weight: 300;">{{ classes.group_class.starts_at.substring(0, classes.group_class.starts_at.length - 3) }}</span>
+        <v-spacer />
+        <v-btn v-if="canCancelParticipation" @click="cancelParticipation" color="primary">
+          Cancel Participation
+        </v-btn>
       </v-card-title>
       <p v-if="classes.is_accepted" style="color:#7AE582;" >You have been accepted for the group class</p>
       <v-card-subtitle>
@@ -21,19 +25,18 @@
 
     <v-card-text>
       {{classes.group_class.description}}
-    </v-card-text>
-    <div v-if="classes.is_accepted === true && classes.is_not_attended === false && classes.is_feedback_sent === null" style="display: flex; flex-direction: column; justify-content: start">
-      <div ref="openFeedbackFormButtons" style="display: flex; flex-direction: column; justify-content: start">
-        <p style="color: #7AE582; padding-left: 15px">Do you want to leave a feedback ?</p>
-        <div style="display: flex; flex-wrap: wrap; width: 100%">
-          <v-btn style="color:#7AE582;" type="button" variant="text" @click="openFeedbackForm">leave feedback</v-btn>
-          <v-btn style="color:#FF4545;" type="button" variant="text" @click="sendFalseFeedback">No</v-btn>
+      <div v-if="canLeaveFeedback" style="display: flex; flex-direction: column; justify-content: start; margin-top: 10px;">
+        <div ref="openFeedbackFormButtons" style="display: flex; flex-direction: column; justify-content: start">
+          <p style="color: #7AE582;">Do you want to leave a feedback ?</p>
+          <div style="display: flex; flex-wrap: wrap; width: 100%; margin-top: 10px;">
+            <v-btn style="color:#7AE582; margin-right: 10px;" type="button" @click="openFeedbackForm">leave feedback</v-btn>
+            <v-btn style="color:#FF4545;" type="button" @click="sendFalseFeedback">No</v-btn>
+          </div>
         </div>
-      </div>
-      <div ref="feedbackForm" class="feedback-form-card"  style="display: none; flex-wrap: wrap; width: 100%; padding: 15px ">
-        <v-form ref="form" lazy-validation style="width: 100%">
-          <div style="width: 100%;">
-            <v-textarea
+        <div ref="feedbackForm" class="feedback-form-card" style="display: none; flex-wrap: wrap; width: 100%; padding: 15px;">
+          <v-form ref="form" lazy-validation style="width: 100%">
+            <div style="width: 100%;">
+              <v-textarea
                 v-model="form.feedback_content"
                 :error-messages="this.formErrors.feedback_content"
                 :rules="rules.feedback_content"
@@ -45,19 +48,21 @@
                 rows="3"
                 auto-grow
                 shaped
-            ></v-textarea>
-          </div>
-          <div class="feedback-form-button">
-            <v-btn style="color:#7AE582;" type="button" variant="text" @click="sendFeedbackContent" >Save</v-btn>
-            <v-btn style="color:#FF4545;" type="button" variant="text" @click="closeFeedbackForm" >Cancel</v-btn>
-          </div>
-        </v-form>
+              ></v-textarea>
+            </div>
+            <div class="feedback-form-button" style="margin-top: 10px;">
+              <v-btn style="color:#7AE582;" type="button" variant="text" @click="sendFeedbackContent" >Save</v-btn>
+              <v-btn style="color:#FF4545;" type="button" variant="text" @click="closeFeedbackForm" >Cancel</v-btn>
+            </div>
+          </v-form>
+        </div>
       </div>
-    </div>
+    </v-card-text>
   </v-card>
 </template>
 <script>
-import {ruleSetGen} from "/src/helpers/rules.js";
+import axios from "axios"
+import { ruleSetGen } from "/src/helpers/rules.js"
 
 export default {
   props: {
@@ -80,6 +85,14 @@ export default {
       rules: {
         feedback_content: ruleSetGen.text("Please enter feedback text", true, 3),
       },
+    }
+  },
+  computed: {
+    canCancelParticipation() {
+      return new Date(this.classes.group_class.starts_at) > new Date() && this.classes.is_not_attended !== true
+    },
+    canLeaveFeedback() {
+      return new Date(this.classes.group_class.ends_at) < new Date() && this.classes.is_feedback_sent === null
     }
   },
   methods: {
@@ -122,11 +135,16 @@ export default {
         })
       })
     },
+    cancelParticipation() {
+      axios.get(`/user_group_class/cancel/${this.classes.group_class.id}`).then(() => {
+        window.location.reload()
+      });
+    },
   }
 };
 </script>
 <style scoped>
-.asd {
+.is_accepted {
   border: 3px solid #7AE582;
 }
 </style>

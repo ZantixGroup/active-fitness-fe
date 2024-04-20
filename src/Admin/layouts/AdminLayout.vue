@@ -96,6 +96,17 @@ export default {
         ],
       },
       {
+        title: "Instructors",
+        height: "56px",
+        prependIcon: "mdi-school",
+        sections: [
+          {
+            title: "List",
+            route: "/admin/instructors/list",
+          },
+        ],
+      },
+      {
         title: "Clubs",
         height: "56px",
         prependIcon: "mdi-home-city",

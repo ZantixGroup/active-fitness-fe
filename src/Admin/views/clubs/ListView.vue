@@ -42,7 +42,7 @@ export default {
           key: "email",
         },
         {
-          title: "Darbības",
+          title: "Actions",
           align: "start",
           sortable: false,
           key: "actions",

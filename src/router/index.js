@@ -1,28 +1,34 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 // Admin
 import AdminLayout from "@/Admin/layouts/AdminLayout.vue";
 import MainView from "@/Admin/views/MainView.vue";
 
 // ----- users ----
-import UserListView from "@/Admin/views/users/ListView.vue";
-import UserEditView from "@/Admin/views/users/EditView.vue";
 import UserCreateView from "@/Admin/views/users/CreateView.vue";
+import UserEditView from "@/Admin/views/users/EditView.vue";
+import UserListView from "@/Admin/views/users/ListView.vue";
+
+// ----- instructors ----
+import InstructorListView from "@/Admin/views/instructors/ListView.vue";
+import InstructorSalaryListView from "@/Admin/views/instructors/SalaryListView.vue";
 
 // ----- clubs ----
-import ClubListView from "@/Admin/views/clubs/ListView.vue";
-import ClubEditView from "@/Admin/views/clubs/EditView.vue";
 import ClubCreateView from "@/Admin/views/clubs/CreateView.vue";
+import ClubEditView from "@/Admin/views/clubs/EditView.vue";
+import ClubListView from "@/Admin/views/clubs/ListView.vue";
 
 // ----- studios ----
-import StudioListView from "@/Admin/views/studios/ListView.vue";
-import StudioEditView from "@/Admin/views/studios/EditView.vue";
 import StudioCreateView from "@/Admin/views/studios/CreateView.vue";
+import StudioEditView from "@/Admin/views/studios/EditView.vue";
+import StudioListView from "@/Admin/views/studios/ListView.vue";
 
 // ----- group classes ----
-import GroupClassListView from "@/Admin/views/classes/ListView.vue";
-import GroupClassEditView from "@/Admin/views/classes/EditView.vue";
+import GroupClassViewAttendeeList from "@/Admin/views/classes/AttendeeListView.vue";
 import GroupClassCreateView from "@/Admin/views/classes/CreateView.vue";
+import GroupClassEditView from "@/Admin/views/classes/EditView.vue";
+import GroupClassListView from "@/Admin/views/classes/ListView.vue";
+
 
 // // ----- feedback ----
 // import FeedbackListView from "@/Admin/views/feedbacks/ListView.vue";
@@ -31,7 +37,7 @@ import GroupClassCreateView from "@/Admin/views/classes/CreateView.vue";
 
 
 // Main
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/HomeView.vue';
 
 // Auth
 import LoginView from "@/views/auth/LoginView";
@@ -41,8 +47,8 @@ import RegisterView from "@/views/auth/RegisterView";
 import MainLayout from "@/layouts/MainLayout";
 
 // Pages
-import ProfileView from "@/views/ProfileView";
 import AuthLayout from "@/layouts/AuthLayout";
+import ProfileView from "@/views/ProfileView";
 
 const routes = [
   {
@@ -106,6 +112,22 @@ const routes = [
     path: "/admin/users/edit/:id",
     name: "admin-users-edit",
     component: UserEditView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/instructors/list",
+    name: "admin-instructors-list",
+    component: InstructorListView,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/instructors/salary/:id",
+    name: "admin-instructors-salary",
+    component: InstructorSalaryListView,
     meta: {
       layout: AdminLayout,
     },
@@ -182,6 +204,15 @@ const routes = [
       layout: AdminLayout,
     },
   },
+  {
+    path: "/admin/classes/view-attendees/:id",
+    name: "admin-classes-view-attendees",
+    component: GroupClassViewAttendeeList,
+    meta: {
+      layout: AdminLayout,
+    },
+    props: true,
+  }
 ]
 
 const router = createRouter({
