@@ -56,9 +56,6 @@ export default {
             placeholder: "Select start at date",
             name: "starts_at",
             rules: ruleSetGen.text("", true),
-            items: [],
-            itemTitle: "title",
-            itemValue: "id",
           },
         },
         endsAt: {
@@ -68,9 +65,6 @@ export default {
             placeholder: "Select end at date",
             name: "ends_at",
             rules: ruleSetGen.text("", true),
-            items: [],
-            itemTitle: "title",
-            itemValue: "id",
           },
         },
         studio: {
