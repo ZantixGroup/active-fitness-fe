@@ -49,7 +49,7 @@ export default {
             itemValue: "id",
           },
         },
-        startsAt: {
+        starts_at: {
           component: markRaw(DatePickField),
           data: {
             label: "Start at",
@@ -58,7 +58,7 @@ export default {
             rules: ruleSetGen.text("", true),
           },
         },
-        endsAt: {
+        ends_at: {
           component: markRaw(DatePickField),
           data: {
             label: "Ends at",
