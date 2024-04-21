@@ -1,13 +1,15 @@
 <template>
-  <v-text-field
-    class="input"
-    v-model="value"
-    :label="data.label"
-    :rules="data.rules"
-    prepend-icon="mdi-calendar"
-    variant="underlined"
-    type="datetime-local"
-  />
+  <v-container class="container">
+    <v-text-field
+        v-model="value"
+        :label="data.label"
+        :rules="data.rules"
+        prepend-icon="mdi-calendar"
+        variant="underlined"
+        type="datetime-local"
+        hide-details="auto"
+    />
+  </v-container>
 </template>
 
 <script>
@@ -50,6 +52,12 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+  gap: 10px;
+  padding: 0 !important;
+}
+
 .input {
   margin-top: 20px;
 }

@@ -49,28 +49,22 @@ export default {
             itemValue: "id",
           },
         },
-        startsAt: {
+        starts_at: {
           component: markRaw(DatePickField),
           data: {
             label: "Start at",
             placeholder: "Select start at date",
             name: "starts_at",
             rules: ruleSetGen.text("", true),
-            items: [],
-            itemTitle: "title",
-            itemValue: "id",
           },
         },
-        endsAt: {
+        ends_at: {
           component: markRaw(DatePickField),
           data: {
             label: "Ends at",
             placeholder: "Select end at date",
             name: "ends_at",
             rules: ruleSetGen.text("", true),
-            items: [],
-            itemTitle: "title",
-            itemValue: "id",
           },
         },
         studio: {
