@@ -5,7 +5,7 @@
       v-show="success"
       type="success"
       class="mb-5"
-      text="Tika pievienots jauns ieraskts"
+      text="Row was added"
     ></v-alert>
 
     <!--  Failure message  -->
@@ -13,7 +13,7 @@
       v-show="failure"
       type="error"
       class="mb-5"
-      text="Notika kļūda"
+      text="An error occurred"
     ></v-alert>
 
     <!--  Form content  -->

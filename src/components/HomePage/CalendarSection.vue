@@ -108,10 +108,10 @@ export default {
               calendarEvents.push({
                 id: groupClass.id,
                 name: groupClass.title,
-                title: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `${groupClassStartDate.getMinutes()}0` : ''} ${groupClass.title}`,
+                title: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `0${groupClassStartDate.getMinutes()}` : groupClassStartDate.getMinutes()} ${groupClass.title}`,
                 date: groupClassStartDate,
-                start: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `${groupClassStartDate.getMinutes()}0` : ''}`,
-                end: `${groupClassEndDate.getHours()}:${groupClassEndDate.getMinutes() < 10 ? `${groupClassEndDate.getMinutes()}0` : ''}`,
+                start: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `0${groupClassStartDate.getMinutes()}` : groupClassStartDate.getMinutes()}`,
+                end: `${groupClassEndDate.getHours()}:${groupClassEndDate.getMinutes() < 10 ? `0${groupClassEndDate.getMinutes()}` : groupClassStartDate.getMinutes()}`,
                 price: groupClass.price,
                 description: groupClass.description,
                 instructor: groupClass.instructor,

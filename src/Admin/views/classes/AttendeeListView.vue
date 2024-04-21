@@ -41,7 +41,7 @@ export default {
           key: "is_accepted",
         },
         {
-          title: "Darbības",
+          title: "Actions",
           align: "start",
           sortable: false,
           key: "actions",
@@ -91,7 +91,7 @@ export default {
           key: "is_not_attended",
         },
         {
-          title: "Darbības",
+          title: "Actions",
           align: "start",
           sortable: false,
           key: "actions",
