@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import Auth from "@/helpers/Auth";
-import router from "@/router";
-import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
+import Auth from "@/helpers/Auth"
+import router from "@/router"
+import { ruleSet, ruleSetGen } from "/src/helpers/rules.js"
 
 export default {
   data() {
@@ -102,7 +102,6 @@ export default {
         if (e.response.data?.errors) {
           Object.keys(e.response.data.errors).forEach((key) => {
             this.formErrors[key] = e.response.data.errors[key]
-            console.log(this.formErrors.data)
           })
         }
       })

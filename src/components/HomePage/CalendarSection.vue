@@ -45,7 +45,7 @@
       </div>
     </div>
   </v-dialog>
-  <section class="calendar-section-container">
+  <section class="calendar-section-container mb-5">
     <div class="calendar-section-text">
       <h1 class="section-header">
         Calendar of Classes
@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import Auth from "@/helpers/Auth";
-import { VueCalendar } from "@zantixgroup/vue-calendar";
+import Auth from "@/helpers/Auth"
+import { VueCalendar } from "@zantixgroup/vue-calendar"
 export default {
   name: "CalendarSection",
   components: {VueCalendar},
@@ -160,8 +160,6 @@ export default {
       await this.axios.get(`/applyForClass/${this.dialogData.id}`).then(() => {
         this.dialogInfo.has_applied = true;
         this.isAcceptDialogActive = true
-      }).catch(e => {
-        console.log(e);
       })
     }
   },

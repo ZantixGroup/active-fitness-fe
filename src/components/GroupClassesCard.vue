@@ -1,25 +1,28 @@
 <template>
   <v-card
-      :class="[
-        'mx-auto',
-        {
-          'is_accepted': classes.is_accepted && canCancelParticipation,
-        }
-      ]"
-      width="100%"
-      hover
+    :class="[
+      'mx-auto card',
+      {
+        'is_accepted': classes.is_accepted && canCancelParticipation,
+      }
+    ]"
+    width="100%"
+    hover
   >
     <v-card-item>
-      <v-card-title class="d-flex overflow-visible" style="color: #FF4545">
+      <v-card-title class="d-flex overflow-visible flex-column flex-sm-row justify-space-between align-center mb-2" style="color: #FF4545">
         {{classes.group_class.title}}<span style="color: gray; margin-left: 15px; font-size: 15px; font-weight: 300;">{{ classes.group_class.starts_at.substring(0, classes.group_class.starts_at.length - 3) }}</span>
         <v-spacer />
         <v-btn v-if="canCancelParticipation" @click="cancelParticipation" color="primary">
           Cancel Participation
         </v-btn>
       </v-card-title>
-      <p v-if="classes.is_accepted" style="color:#7AE582;" >You have been accepted for the group class</p>
       <v-card-subtitle>
-        {{classes.group_class.instructor.name}}
+        <p>{{ descriptionText }}</p>
+        <p class="mt-3">{{ classes.group_class.instructor.name }} {{ classes.group_class.instructor.surname }}</p>
+        <p>Studio: {{ classes.group_class.studio.title }}</p>
+        <p>Address: {{ classes.group_class.studio.club.title }} {{ classes.group_class.studio.club.address }}</p>
+        <p>Contact: {{ classes.group_class.studio.club.phone }} - {{ classes.group_class.studio.club.email }}</p>
       </v-card-subtitle>
     </v-card-item>
 
@@ -27,13 +30,13 @@
       {{classes.group_class.description}}
       <div v-if="canLeaveFeedback" style="display: flex; flex-direction: column; justify-content: start; margin-top: 10px;">
         <div ref="openFeedbackFormButtons" style="display: flex; flex-direction: column; justify-content: start">
-          <p style="color: #7AE582;">Do you want to leave a feedback ?</p>
+          <p style="color: #7AE582;">Do you want to leave us feedback?</p>
           <div style="display: flex; flex-wrap: wrap; width: 100%; margin-top: 10px;">
             <v-btn style="color:#7AE582; margin-right: 10px;" type="button" @click="openFeedbackForm">leave feedback</v-btn>
             <v-btn style="color:#FF4545;" type="button" @click="sendFalseFeedback">No</v-btn>
           </div>
         </div>
-        <div ref="feedbackForm" class="feedback-form-card" style="display: none; flex-wrap: wrap; width: 100%; padding: 15px;">
+        <div ref="feedbackForm" class="feedback-form-card" style="display: none; flex-wrap: wrap; width: 100%;">
           <v-form ref="form" lazy-validation style="width: 100%">
             <div style="width: 100%;">
               <v-textarea
@@ -50,9 +53,9 @@
                 shaped
               ></v-textarea>
             </div>
-            <div class="feedback-form-button" style="margin-top: 10px;">
-              <v-btn style="color:#7AE582;" type="button" variant="text" @click="sendFeedbackContent" >Save</v-btn>
-              <v-btn style="color:#FF4545;" type="button" variant="text" @click="closeFeedbackForm" >Cancel</v-btn>
+            <div class="feedback-form-button d-flex" style="margin-top: 5px; gap: 15px;">
+              <v-btn style="color:#7AE582;" type="button" @click="sendFeedbackContent" >Save</v-btn>
+              <v-btn style="color:#FF4545;" type="button" @click="closeFeedbackForm" >Cancel</v-btn>
             </div>
           </v-form>
         </div>
@@ -93,6 +96,21 @@ export default {
     },
     canLeaveFeedback() {
       return new Date(this.classes.group_class.ends_at) < new Date() && this.classes.is_feedback_sent === null
+    },
+    descriptionText() {
+      if (new Date(this.classes.group_class.ends_at) < new Date()) {
+        if (this.classes.is_not_attended) {
+          return "You canceled your participation"
+        }
+
+        return null
+      }
+
+      if (this.classes.is_not_attended) {
+        return "You canceled your participation"
+      }
+
+      return this.classes.is_accepted ? "You have been accepted for this activity" : "You haven't yet been accepted for this activity"
     }
   },
   methods: {
@@ -144,7 +162,14 @@ export default {
 };
 </script>
 <style scoped>
+.card {
+  border: 1px solid #E0E0E0;
+  border-radius: 5px;
+  cursor: unset;
+}
+
 .is_accepted {
   border: 3px solid #7AE582;
+  border-radius: 5px;
 }
 </style>

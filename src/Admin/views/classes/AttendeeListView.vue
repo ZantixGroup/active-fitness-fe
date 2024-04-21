@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import TableContent from "@/Admin/components/TableContent.vue";
-import CallbackAction from "@/Admin/components/form_actions/CallbackAction.vue";
-import axios from "axios";
-import { h } from "vue";
+import TableContent from "@/Admin/components/TableContent.vue"
+import CallbackAction from "@/Admin/components/form_actions/CallbackAction.vue"
+import axios from "axios"
+import { h } from "vue"
 
 export default {
   name: "AttendeeListView",
@@ -61,7 +61,6 @@ export default {
           icon: "mdi-trash-can-outline",
           color: "red",
           callback: async (data) => {
-            console.log(data.user.id)
             await axios.delete(`/delete_group_class_users/${data.id}`).then(() => {
               window.location.reload()
             });

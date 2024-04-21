@@ -1,20 +1,18 @@
 <template>
   <v-main>
     <MainNavigationBar />
-    <div class="content-wrapper"></div>
-    <slot />
-    <MainFooter />
+    <div class="content-wrapper">
+      <slot />
+    </div>
   </v-main>
 </template>
 
 <script>
-import MainNavigationBar from "@/components/MainNavigationBar";
-import MainFooter from "@/components/MainFooter";
+import MainNavigationBar from "@/components/MainNavigationBar"
 
 export default {
   name: "MainLayout",
   components: {
-    MainFooter,
     MainNavigationBar
   },
 };
