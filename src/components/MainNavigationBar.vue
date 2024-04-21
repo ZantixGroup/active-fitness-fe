@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import NavigationBarLogo from "@/components/NavigationBarLogo";
-import Auth from "@/helpers/Auth";
+import NavigationBarLogo from "@/components/NavigationBarLogo"
+import Auth from "@/helpers/Auth"
 export default {
   name: "MainNavigationBar",
   components: {NavigationBarLogo},
@@ -53,8 +53,6 @@ export default {
       this.axios.get('/logout').then(() => {
         this.auth.clearAuth()
         this.$router.push("/")
-      }).catch(e => {
-        console.log(e)
       })
     }
   },

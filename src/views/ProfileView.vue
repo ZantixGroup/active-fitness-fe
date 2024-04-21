@@ -1,7 +1,10 @@
 <template>
-  <div class="body">
-    <div class="header" id="welcomeText" style="display: flex; justify-content: start; align-items: center; width: 100%; gap: 10px">
-      <h1>Hi, {{ auth.user.name }} {{ auth.user.surname }}</h1>
+  <div class="body mb-10">
+    <div class="header d-flex w-100 flex-column flex-sm-row justify-space-between align-center" id="welcomeText">
+      <div>
+        <h1>Hi, {{ auth.user.name }} {{ auth.user.surname }}</h1>
+        <p>Your loyalty score: <b>{{ auth.user.loyalty }}</b></p>
+      </div>
       <v-btn type="button" @click="showUserForm" variant="flat" color="primary" >Edit profile</v-btn>
     </div>
       <v-form ref="form" lazy-validation @submit.prevent @submit="save" id="userForm">
@@ -88,12 +91,11 @@
             </v-col>
           </v-row>
         </v-container>
-        <div style="display: flex; justify-content: space-between; width: 100%">
-          <div class="d-flex ga-2 pt-3 pa-3 form-submit-buttons" style="justify-content: start">
-            <v-btn type="submit" @submit="save" variant="flat" color="primary" >Saglabāt</v-btn>
-            <v-btn @click="this.$router.go()" variant="text">Atmest izmaiņas</v-btn>
+        <div style="display: flex; justify-content: end; width: 100%">
+          <div class="d-flex ga-2 pt-3 pa-3 form-submit-buttons" style="justify-content: end">
+            <v-btn @click="this.$router.go()" variant="text">Discard changes</v-btn>
+            <v-btn type="submit" @submit="save" variant="flat" color="primary" >Save</v-btn>
           </div>
-          <v-btn style="align-self: end" type="button" @click="closeUserForm" variant="text" width="40px">close</v-btn>
         </div>
       </v-form>
     <div v-if="auth.user.role_id === 2" class="salaries-graphic">
@@ -105,12 +107,19 @@
           :series="series"
       ></apexchart>
     </div>
+    <p class="text-h5 me-auto" v-if="user_classes_active.length > 0">Upcomming classes</p>
     <GroupClassesCard
-      v-for="(classes, index) in user_classes"
+      v-for="(classes, index) in user_classes_active"
       :key="index"
       :classes="classes"
     />
-    </div>
+    <p class="text-h5 me-auto mt-4" v-if="user_classes_past.length > 0">Past classes</p>
+    <GroupClassesCard
+      v-for="(classes, index) in user_classes_past"
+      :key="index"
+      :classes="classes"
+    />
+  </div>
 </template>
 
 <script>
@@ -142,7 +151,8 @@ export default {
       ],
       user: null,
       user_id: null,
-      user_classes: [],
+      user_classes_active: [],
+      user_classes_past: [],
       rules: {
         firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
         lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
@@ -163,11 +173,13 @@ export default {
       if (this.user.role_id === 1) {
         this.user.role_id === "user"
       }
-    }).catch(e => {
-      console.log(e)
+
+      Auth.setUser(response.data)
     })
     this.axios.get(`/profile_user_group_classes`).then(response => {
-      this.user_classes = response.data.data
+      const user_classes = response.data.data
+      this.user_classes_active = user_classes.filter((userClass) => (new Date(userClass.group_class.ends_at) > new Date() && userClass.is_not_attended != true)).sort((a, b) => new Date(a.group_class.starts_at) - new Date(b.group_class.starts_at))
+      this.user_classes_past = user_classes.filter((userClass) => (new Date(userClass.group_class.starts_at) < new Date() || userClass.is_not_attended === true)).sort((a, b) => new Date(b.group_class.starts_at) - new Date(a.group_class.starts_at))
     })
     this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
       const newData = [];
@@ -189,18 +201,12 @@ export default {
       this.$refs.form.validate();
       this.axios.put(`/profile_update`, this.user).then(response => {
         Auth.setUser(response.data.data)
-      }).catch(error => {
-        console.log(error.response.data)
       })
     },
     showUserForm() {
       document.getElementById('userForm').style.display = "flex";
       document.getElementById('welcomeText').style.display = "none";
     },
-    closeUserForm() {
-      document.getElementById('userForm').style.display = "none";
-      document.getElementById('welcomeText').style.display = "block";
-    }
   },
 }
 </script>
@@ -210,9 +216,10 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
 }
 #slaries-chart{
   width: 100%;
@@ -220,7 +227,7 @@ export default {
 .v-form {
   width: 100%;
   margin: auto;
-  margin-top: 100px;
+  margin-block: 20px;
   display: none;
   flex-direction: column;
   background-color: white;

@@ -110,9 +110,9 @@
 </template>
 
 <script>
-import Auth from "@/helpers/Auth";
-import router from "@/router";
-import { ruleSet, ruleSetGen } from "/src/helpers/rules.js";
+import Auth from "@/helpers/Auth"
+import router from "@/router"
+import { ruleSet, ruleSetGen } from "/src/helpers/rules.js"
 
 export default {
   data() {
@@ -163,7 +163,6 @@ export default {
     },
     async register() {
       const { valid } = await this.$refs.form.validate();
-      console.log(valid)
       if (!valid) return;
       this.formErrors = {
         name: null,
@@ -175,7 +174,6 @@ export default {
         password: null,
       }
       this.axios.post('/register', this.form).then(response => {
-        console.log(response.data)
         window.localStorage.setItem('access_token', response.data.data.access_token)
         window.localStorage.setItem('user', JSON.stringify(response.data.data.user) ?? '{}')
         Auth.setAuth(response.data.data.access_token, response.data.data.user)
@@ -183,7 +181,6 @@ export default {
       }).catch(e => {
         Object.keys(e.response.data.errors).forEach((key) => {
           this.formErrors[key] = e.response.data.errors[key]
-          console.log(this.formErrors)
         })
       })
     },
