@@ -9,7 +9,7 @@
 import { markRaw } from "vue";
 import TextField from "@/Admin/components/form/TextField.vue";
 
-import { ruleSetGen } from "@/Admin/helpers/rules";
+import {ruleSet, ruleSetGen} from "@/Admin/helpers/rules";
 import EditForm from "@/Admin/components/EditForm.vue";
 import SelectField from "@/Admin/components/form/SelectField.vue";
 import DatePickField from "@/Admin/components/form/DatePickField.vue";
@@ -43,7 +43,7 @@ export default {
             label: "Instructor",
             placeholder: "Select instructor",
             name: "instructor_id",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSet.select,
             items: [],
             itemTitle: "full_name",
             itemValue: "id",
@@ -73,7 +73,7 @@ export default {
             label: "Studio",
             placeholder: "Select studio",
             name: "studio_id",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSet.select,
             items: [],
             itemTitle: "title",
             itemValue: "id",

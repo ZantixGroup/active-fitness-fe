@@ -3,13 +3,6 @@
     <main>
       <header class="d-flex align-center">
         <img src="@/assets/images/logo.svg" width="234px" />
-        <div class="navigation-bar-avatar-container d-flex align-center">
-          <v-icon icon="mdi-bell" color="#8C8C8C" size="30px"></v-icon>
-          <v-avatar
-            image="https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg"
-            size="54"
-          ></v-avatar>
-        </div>
       </header>
       <div class="main-container d-flex">
         <div class="side-navigation-bar d-flex flex-column">
@@ -19,8 +12,8 @@
               size="54"
             ></v-avatar>
             <div class="user-info-text">
-              <h2>Zigmunds Latvānis</h2>
-              <p>Administrators</p>
+              <h2>{{ Auth.user.name }} {{ Auth.user.surname }}</h2>
+              <p>{{ roles[Auth.user.role_id - 1] }}</p>
             </div>
           </div>
           <v-divider color="#F0F0F0" thickness="1"></v-divider>
@@ -70,9 +63,21 @@
   </v-layout>
 </template>
 <script>
+import Auth from "../../helpers/Auth";
+
 export default {
   name: "AdminLayout",
+  computed: {
+    Auth() {
+      return Auth
+    }
+  },
   data: () => ({
+    roles: [
+      'User',
+      'Instructor',
+      'Administrator',
+    ],
     sideNavbarItems: [
       {
         title: "Main panel",
