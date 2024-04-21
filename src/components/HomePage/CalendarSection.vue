@@ -101,7 +101,7 @@ export default {
       if (this.fetchedMonths.find((e) => e === date) === undefined) {
         const calendarEvents = [];
         setTimeout(async () => {
-          await this.axios.get('/classes').then((response) => {
+          await this.axios.get('/events').then((response) => {
             response.data.data.forEach((groupClass) => {
               const groupClassStartDate = new Date(groupClass.starts_at)
               const groupClassEndDate = new Date(groupClass.ends_at)

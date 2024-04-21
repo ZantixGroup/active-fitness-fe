@@ -33,7 +33,7 @@
       type="submit"
       block
       class="mt-5"
-      text="Izveidot"
+      text="Create"
       @click="submit"
     ></v-btn>
   </v-form>

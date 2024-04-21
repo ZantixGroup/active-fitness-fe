@@ -9,7 +9,7 @@
 import { markRaw } from "vue";
 import TextField from "@/Admin/components/form/TextField.vue";
 
-import { ruleSetGen } from "@/Admin/helpers/rules";
+import {ruleSet, ruleSetGen} from "@/Admin/helpers/rules";
 import EditForm from "@/Admin/components/EditForm.vue";
 import SelectField from "@/Admin/components/form/SelectField.vue";
 export default {
@@ -42,7 +42,7 @@ export default {
             label: "Club",
             placeholder: "Select club",
             name: "club_id",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSet.select,
             items: [],
             itemTitle: "title",
             itemValue: "id",

@@ -52,7 +52,8 @@ export default {
             label: "Password",
             placeholder: "Enter password",
             name: "password",
-            rules: ruleSetGen.text("", true, 9),
+            inputType: 'password',
+            rules: ruleSetGen.text("Enter at least 9 characters", true, 8),
           },
         },
         phone: {
@@ -88,7 +89,7 @@ export default {
             label: "Role",
             placeholder: "Select role",
             name: "role_id",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSet.select,
             items: [],
             itemTitle: "name",
             itemValue: "id",

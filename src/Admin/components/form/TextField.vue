@@ -5,6 +5,7 @@
       :label="data.label"
       :placeholder="data.placeholder"
       :rules="data.rules"
+      :type="data.inputType"
       required
       hide-details="auto"
       variant="underlined"
@@ -42,7 +43,7 @@ export default {
       },
       inputType: {
         type: String,
-        default: "text",
+        default: 'text',
       },
       rules: {
         type: Array,

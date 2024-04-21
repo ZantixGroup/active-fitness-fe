@@ -25,7 +25,7 @@ export default {
             label: "Name",
             placeholder: "Enter name",
             name: "name",
-            rules: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
+            rules: ruleSetGen.text("", true, 3),
           },
         },
         surname: {
@@ -34,7 +34,7 @@ export default {
             label: "Surname",
             placeholder: "Enter surname",
             name: "surname",
-            rules: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
+            rules: ruleSetGen.text("", true, 3),
           },
         },
         email: {
@@ -52,7 +52,8 @@ export default {
             label: "Password",
             placeholder: "Enter password",
             name: "password",
-            rules: ruleSetGen.text(undefined, false, 9),
+            inputType: 'password',
+            rules: ruleSetGen.text(undefined, false, 8),
           },
         },
         phone: {
@@ -88,6 +89,7 @@ export default {
             label: "Role",
             placeholder: "Select role",
             name: "role_id",
+            rules: ruleSet.select,
             items: [],
             itemTitle: "name",
             itemValue: "id",

@@ -10,7 +10,7 @@ import { markRaw } from "vue";
 import CreateForm from "@/Admin/components/CreateForm.vue";
 import TextField from "@/Admin/components/form/TextField.vue";
 
-import { ruleSetGen } from "@/Admin/helpers/rules";
+import {ruleSet, ruleSetGen} from "@/Admin/helpers/rules";
 import SelectField from "@/Admin/components/form/SelectField.vue";
 export default {
   name: "StudioCreateView",
@@ -42,7 +42,7 @@ export default {
             label: "Club",
             placeholder: "Select club",
             name: "club_id",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSet.select,
             items: [],
             itemTitle: "title",
             itemValue: "id",
