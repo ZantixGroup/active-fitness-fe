@@ -73,7 +73,13 @@ class ruleSetGen {
   static text(message, isRequired = true, minLen = 1) {
     return [
       isRequired ? this.fieldManditory() : true,
-      (v) => (v && v.length >= minLen && v.length < 4096) || message,
+      (v) => {
+        if (!isRequired && (v === null || v === undefined || v === "")) {
+          return true;
+        }
+
+        return (v && v.length >= minLen && v.length < 4096) || message
+      }
     ];
   }
 
@@ -152,4 +158,5 @@ class ruleSetGen {
   }
 }
 
-export {ruleSet, ruleSetGen}
+export { ruleSet, ruleSetGen };
+

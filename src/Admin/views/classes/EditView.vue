@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import { markRaw } from "vue";
 import TextField from "@/Admin/components/form/TextField.vue";
+import { markRaw } from "vue";
 
-import {ruleSet, ruleSetGen} from "@/Admin/helpers/rules";
 import EditForm from "@/Admin/components/EditForm.vue";
-import SelectField from "@/Admin/components/form/SelectField.vue";
 import DatePickField from "@/Admin/components/form/DatePickField.vue";
+import SelectField from "@/Admin/components/form/SelectField.vue";
+import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 export default {
   name: "ClassEditView",
   components: { EditForm },
@@ -25,7 +25,7 @@ export default {
             label: "Title",
             placeholder: "Enter title",
             name: "title",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Title is required", true, 3),
           },
         },
         description: {
@@ -34,7 +34,7 @@ export default {
             label: "Description",
             placeholder: "Enter description",
             name: "description",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSetGen.text("Description is required", true),
           },
         },
         instructor: {
@@ -55,7 +55,7 @@ export default {
             label: "Start at",
             placeholder: "Select start at date",
             name: "starts_at",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSetGen.text("Date is required", true),
           },
         },
         ends_at: {
@@ -64,7 +64,7 @@ export default {
             label: "Ends at",
             placeholder: "Select end at date",
             name: "ends_at",
-            rules: ruleSetGen.text("", true),
+            rules: ruleSetGen.text("Date is required", true),
           },
         },
         studio: {
@@ -85,7 +85,7 @@ export default {
             label: "Price",
             placeholder: "Enter price",
             name: "price",
-            rules: ruleSetGen.price("", true),
+            rules: ruleSetGen.price("Price is required", true),
           },
         },
       },

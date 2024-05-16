@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import { markRaw } from "vue";
 import CreateForm from "@/Admin/components/CreateForm.vue";
 import TextField from "@/Admin/components/form/TextField.vue";
+import { markRaw } from "vue";
 
 import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 export default {
@@ -23,7 +23,7 @@ export default {
             label: "Title",
             placeholder: "Enter title",
             name: "title",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Title is required", true, 3),
           },
         },
         address: {
@@ -32,7 +32,7 @@ export default {
             label: "Address",
             placeholder: "Enter address",
             name: "address",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Address is required", true, 3),
           },
         },
         phone: {

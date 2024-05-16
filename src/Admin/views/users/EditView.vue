@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import { markRaw } from "vue";
-import TextField from "@/Admin/components/form/TextField.vue";
-import SelectField from "@/Admin/components/form/SelectField.vue";
-import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 import EditForm from "@/Admin/components/EditForm.vue";
 import DatePickField from "@/Admin/components/form/DatePickField.vue";
+import SelectField from "@/Admin/components/form/SelectField.vue";
+import TextField from "@/Admin/components/form/TextField.vue";
+import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
+import { markRaw } from "vue";
 
 export default {
   name: "UserEditView",
@@ -46,23 +46,13 @@ export default {
             rules: ruleSet.email,
           },
         },
-        password: {
-          component: markRaw(TextField),
-          data: {
-            label: "Password",
-            placeholder: "Enter password",
-            name: "password",
-            inputType: 'password',
-            rules: ruleSetGen.text(undefined, false, 8),
-          },
-        },
         phone: {
           component: markRaw(TextField),
           data: {
             label: "Phone number",
             placeholder: "Enter phone number",
             name: "phone",
-            rules: ruleSetGen.phoneNumber(undefined, false),
+            rules: ruleSetGen.phoneNumber("Phone number must be valid", false),
           },
         },
         address: {
@@ -71,7 +61,7 @@ export default {
             label: "Address",
             placeholder: "Enter address",
             name: "address",
-            rules: ruleSetGen.text(undefined, false, 3),
+            rules: ruleSetGen.text("Address must be valid", false, 3),
           },
         },
         date_of_birthday: {
@@ -80,7 +70,7 @@ export default {
             label: "Birthday",
             placeholder: "Enter birthday",
             name: "date_of_birthday",
-            rules: ruleSetGen.text(undefined, false, 3),
+            rules: ruleSetGen.text("Birthday must be valid", false, 3),
           },
         },
         role_id: {

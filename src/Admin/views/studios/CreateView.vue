@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import { markRaw } from "vue";
 import CreateForm from "@/Admin/components/CreateForm.vue";
 import TextField from "@/Admin/components/form/TextField.vue";
+import { markRaw } from "vue";
 
-import {ruleSet, ruleSetGen} from "@/Admin/helpers/rules";
 import SelectField from "@/Admin/components/form/SelectField.vue";
+import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 export default {
   name: "StudioCreateView",
   components: { CreateForm },
@@ -24,7 +24,7 @@ export default {
             label: "Title",
             placeholder: "Enter title",
             name: "title",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Title is required", true, 3),
           },
         },
         capacity: {
@@ -33,7 +33,7 @@ export default {
             label: "Capacity",
             placeholder: "Enter capacity",
             name: "capacity",
-            rules: ruleSetGen.number("", true),
+            rules: ruleSetGen.number("Capacity is required", true),
           },
         },
         club: {

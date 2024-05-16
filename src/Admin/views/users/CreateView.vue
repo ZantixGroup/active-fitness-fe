@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import { markRaw } from "vue";
 import CreateForm from "@/Admin/components/CreateForm.vue";
-import TextField from "@/Admin/components/form/TextField.vue";
 import SelectField from "@/Admin/components/form/SelectField.vue";
+import TextField from "@/Admin/components/form/TextField.vue";
+import { markRaw } from "vue";
 
-import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 import DatePickField from "@/Admin/components/form/DatePickField.vue";
+import { ruleSet, ruleSetGen } from "@/Admin/helpers/rules";
 export default {
   name: "UserCreateView",
   components: { CreateForm },
@@ -25,7 +25,7 @@ export default {
             label: "Name",
             placeholder: "Enter name",
             name: "name",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Name is invalid", true, 3),
           },
         },
         surname: {
@@ -34,7 +34,7 @@ export default {
             label: "Surname",
             placeholder: "Enter surname",
             name: "surname",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Surname is invalid", true, 3),
           },
         },
         email: {
@@ -62,7 +62,7 @@ export default {
             label: "Phone number",
             placeholder: "Enter phone number",
             name: "phone",
-            rules: ruleSetGen.phoneNumber("", true),
+            rules: ruleSetGen.phoneNumber("Phone number invalid", true),
           },
         },
         address: {
@@ -71,7 +71,7 @@ export default {
             label: "Address",
             placeholder: "Enter address",
             name: "address",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Address invalid", true, 3),
           },
         },
         date_of_birthday: {
@@ -80,7 +80,7 @@ export default {
             label: "Birthday",
             placeholder: "Enter birthday",
             name: "date_of_birthday",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Birthday invalid", true, 3),
           },
         },
         role: {
