@@ -2,41 +2,41 @@
   <v-dialog v-if="dialogData" v-model="isDialogActive" max-width="700">
     <div class="class-dialog">
       <div class="dialog-header">
-        <h3>{{ dialogData.name }}</h3>
+        <h3>{{ dialogData?.name }}</h3>
         <div class="dialog-header-price">
-          <p>{{ dialogData.price }}€</p>
+          <p>{{ dialogData?.price }}€</p>
         </div>
       </div>
       <div class="dialog-info">
         <div>
           <div class="dialog-date">
             <v-icon icon="mdi-calendar" />
-            <p>{{ dialogData.date }}</p>
-            <p>{{ dialogData.start }} - {{ dialogData.end }}</p>
+            <p>{{ dialogData?.date }}</p>
+            <p>{{ dialogData?.start }} - {{ dialogData?.end }}</p>
           </div>
         </div>
 
-        <p>{{ dialogData.description }}</p>
+        <p>{{ dialogData?.description }}</p>
         <div class="dialog-details">
-          <p><b>Instructor: </b>{{ dialogData.instructor }}</p>
-          <p><b>Place: </b>{{ dialogData.place }}</p>
-          <p><b>Class capacity: </b>{{ dialogData.capacity }}</p>
+          <p><b>Instructor: </b>{{ dialogData?.instructor }}</p>
+          <p><b>Place: </b>{{ dialogData?.place }}</p>
+          <p><b>Class capacity: </b>{{ dialogData?.capacity }}</p>
         </div>
       </div>
       <div class="dialog-footer">
         <v-btn @click="closeDialog">
           Close
         </v-btn>
-        <v-btn v-if="dialogInfo.is_accepted" color="green" :disabled="true">accepted</v-btn>
-        <v-btn v-else-if="dialogInfo.has_applied" color="green" :disabled="true">applied</v-btn>
-        <v-btn v-else-if="auth.isLoggedIn" color="#ff4545" @click="applyForClass" :disabled="dialogInfo.is_full">Apply</v-btn>
+        <v-btn v-if="dialogInfo?.is_accepted" color="green" :disabled="true">accepted</v-btn>
+        <v-btn v-else-if="dialogInfo?.has_applied" color="green" :disabled="true">applied</v-btn>
+        <v-btn v-else-if="auth.isLoggedIn" color="#ff4545" @click="applyForClass" :disabled="dialogInfo?.is_full">Apply</v-btn>
         <v-btn v-else color="#ff4545" @click="$router.push('/login')">Login</v-btn>
       </div>
     </div>
   </v-dialog>
   <v-dialog v-model="isAcceptDialogActive" max-width="700">
     <div class="class-dialog">
-      <h2>You have successfully applied for {{ dialogData.name }}</h2>
+      <h2>You have successfully applied for {{ dialogData?.name }}</h2>
       <p>Check profile</p>
       <div class="dialog-footer">
         <v-btn @click="closeDialog">
@@ -103,20 +103,20 @@ export default {
         setTimeout(async () => {
           await this.axios.get('/events').then((response) => {
             response.data.data.forEach((groupClass) => {
-              const groupClassStartDate = new Date(groupClass.starts_at)
-              const groupClassEndDate = new Date(groupClass.ends_at)
+              const groupClassStartDate = new Date(groupClass?.starts_at)
+              const groupClassEndDate = new Date(groupClass?.ends_at)
               calendarEvents.push({
-                id: groupClass.id,
-                name: groupClass.title,
-                title: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `0${groupClassStartDate.getMinutes()}` : groupClassStartDate.getMinutes()} ${groupClass.title}`,
+                id: groupClass?.id,
+                name: groupClass?.title,
+                title: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `0${groupClassStartDate.getMinutes()}` : groupClassStartDate.getMinutes()} ${groupClass?.title}`,
                 date: groupClassStartDate,
                 start: `${groupClassStartDate.getHours()}:${groupClassStartDate.getMinutes() < 10 ? `0${groupClassStartDate.getMinutes()}` : groupClassStartDate.getMinutes()}`,
                 end: `${groupClassEndDate.getHours()}:${groupClassEndDate.getMinutes() < 10 ? `0${groupClassEndDate.getMinutes()}` : groupClassStartDate.getMinutes()}`,
-                price: groupClass.price,
-                description: groupClass.description,
-                instructor: groupClass.instructor,
-                capacity: groupClass.capacity,
-                place: groupClass.studio.club.address
+                price: groupClass?.price,
+                description: groupClass?.description,
+                instructor: groupClass?.instructor,
+                capacity: groupClass?.capacity,
+                place: groupClass?.studio?.club?.address
               });
             });
             this.calendarOptions.events = this.calendarOptions.events.concat(calendarEvents);
@@ -157,7 +157,7 @@ export default {
       this.isDialogActive = false;
     },
     async applyForClass() {
-      await this.axios.get(`/applyForClass/${this.dialogData.id}`).then(() => {
+      await this.axios.get(`/applyForClass/${this.dialogData?.id}`).then(() => {
         this.dialogInfo.has_applied = true;
         this.isAcceptDialogActive = true
       })

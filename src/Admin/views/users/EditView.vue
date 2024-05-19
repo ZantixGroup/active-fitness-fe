@@ -25,7 +25,7 @@ export default {
             label: "Name",
             placeholder: "Enter name",
             name: "name",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Please enter a valid name", true, 3),
           },
         },
         surname: {
@@ -34,7 +34,7 @@ export default {
             label: "Surname",
             placeholder: "Enter surname",
             name: "surname",
-            rules: ruleSetGen.text("", true, 3),
+            rules: ruleSetGen.text("Please enter a valid surname", true, 3),
           },
         },
         email: {
