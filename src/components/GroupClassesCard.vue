@@ -3,7 +3,7 @@
     :class="[
       'mx-auto card',
       {
-        'is_accepted': classes.is_accepted && canCancelParticipation,
+        'is_accepted': classes?.is_accepted && canCancelParticipation,
       }
     ]"
     width="100%"
@@ -11,7 +11,7 @@
   >
     <v-card-item>
       <v-card-title class="d-flex overflow-visible flex-column flex-sm-row justify-space-between align-center mb-2" style="color: #FF4545">
-        {{classes.group_class.title}}<span style="color: gray; margin-left: 15px; font-size: 15px; font-weight: 300;">{{ classes.group_class.starts_at.substring(0, classes.group_class.starts_at.length - 3) }}</span>
+        {{classes?.group_class?.title}}<span style="color: gray; margin-left: 15px; font-size: 15px; font-weight: 300;">{{ classes?.group_class?.starts_at?.substring(0, classes?.group_class?.starts_at?.length - 3) }}</span>
         <v-spacer />
         <v-btn v-if="canCancelParticipation" @click="cancelParticipation" color="primary">
           Cancel Participation
@@ -19,10 +19,10 @@
       </v-card-title>
       <v-card-subtitle>
         <p>{{ descriptionText }}</p>
-        <p class="mt-3">{{ classes.group_class.instructor.name }} {{ classes.group_class.instructor.surname }}</p>
-        <p>Studio: {{ classes.group_class.studio.title }}</p>
-        <p>Address: {{ classes.group_class.studio.club.title }} {{ classes.group_class.studio.club.address }}</p>
-        <p>Contact: {{ classes.group_class.studio.club.phone }} - {{ classes.group_class.studio.club.email }}</p>
+        <p class="mt-3">{{ classes?.group_class?.instructor?.name }} {{ classes?.group_class?.instructor?.surname }}</p>
+        <p>Studio: {{ classes?.group_class?.studio?.title }}</p>
+        <p>Address: {{ classes?.group_class?.studio?.club?.title }} {{ classes?.group_class?.studio?.club?.address }}</p>
+        <p>Contact: {{ classes?.group_class?.studio?.club?.phone }} - {{ classes?.group_class?.studio?.club?.email }}</p>
       </v-card-subtitle>
     </v-card-item>
 
@@ -41,8 +41,8 @@
             <div style="width: 100%;">
               <v-textarea
                 v-model="form.feedback_content"
-                :error-messages="this.formErrors.feedback_content"
-                :rules="rules.feedback_content"
+                :error-messages="this.formErrors?.feedback_content"
+                :rules="rules?.feedback_content"
                 label="Feedback content"
                 required
                 placeholder="Here you can enter feedback"
@@ -92,13 +92,13 @@ export default {
   },
   computed: {
     canCancelParticipation() {
-      return new Date(this.classes.group_class.starts_at) > new Date() && this.classes.is_not_attended !== true
+      return new Date(this.classes?.group_class?.starts_at) > new Date() && this?.classes?.is_not_attended !== true
     },
     canLeaveFeedback() {
-      return new Date(this.classes.group_class.ends_at) < new Date() && this.classes.is_feedback_sent === null
+      return new Date(this.classes?.group_class?.ends_at) < new Date() && this?.classes?.is_feedback_sent === null
     },
     descriptionText() {
-      if (new Date(this.classes.group_class.ends_at) < new Date()) {
+      if (new Date(this.classes?.group_class?.ends_at) < new Date()) {
         if (this.classes.is_not_attended) {
           return "You canceled your participation"
         }

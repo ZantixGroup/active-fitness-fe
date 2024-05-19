@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import TableContent from "@/Admin/components/TableContent.vue"
-import CallbackAction from "@/Admin/components/form_actions/CallbackAction.vue"
-import axios from "axios"
-import { h } from "vue"
+import TableContent from "@/Admin/components/TableContent.vue";
+import CallbackAction from "@/Admin/components/form_actions/CallbackAction.vue";
+import axios from "axios";
+import { h } from "vue";
 
 export default {
   name: "AttendeeListView",
@@ -89,6 +89,11 @@ export default {
           title: "Is not attended",
           align: "start",
           key: "is_not_attended",
+        },
+        {
+          title: "Feedback",
+          align: "start",
+          key: "feedback_content",
         },
         {
           title: "Actions",

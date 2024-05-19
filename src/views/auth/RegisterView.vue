@@ -136,13 +136,13 @@ export default {
         password: null,
       },
       rules: {
-        firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
-        lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
-        address: ruleSetGen.text("Lūdzu ievadiet derīgu adresi", true, 3),
+        firstname: ruleSetGen.text("Please enter a valid name", true, 3),
+        lastname: ruleSetGen.text("Please enter a valid surname", true, 3),
+        address: ruleSetGen.text("Please enter a valid address", true, 3),
         email: ruleSet.email,
         phoneNumber: ruleSetGen.phoneNumber(undefined, false),
-        date_of_birth: ruleSetGen.date("Lūdzu ievadiet derīgu dzimšanas datumu", true),
-        password: ruleSetGen.text("Parolei jābūt vismaz 8 rakstzīmju simboliem", true, 8),
+        date_of_birth: ruleSetGen.date("Please enter a valid birth date", true),
+        password: ruleSetGen.text("A password must be at least 8 symbols long", true, 8),
 
       },
     }
@@ -157,7 +157,7 @@ export default {
       const date = new Date(birth_date);
       const currentDate = new Date();
        if(date >= currentDate || date.getFullYear() < 1900) {
-         return "Lūdzu ievadiet derīgu datumu"
+         return "Please enter a valid date"
        }
        return true
     },
