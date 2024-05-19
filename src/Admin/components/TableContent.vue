@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import TableActions from "@/Admin/components/TableActions.vue"
+import TableActions from "@/Admin/components/TableActions.vue";
 
 export default {
   name: "NewTableContent",
@@ -131,12 +131,6 @@ export default {
         this.pagination.total = response.data.meta.total;
         this.content = response.data.data;
       }).finally(() => {
-        console.log(
-          this.pagination.itemsPerPage,
-          this.pagination.current_page,
-          this.pagination.last_page,
-          this.pagination.total
-        )
         this.loading = false;
       })
     },
