@@ -15,15 +15,12 @@ export default {
       default: null,
     },
   },
-	mounted() {
-		console.log(this.data)
-	},
 	methods: {
     restore() {
-			this.axios.get(`/group_class_archive_backup/${this.data.id}`).then(() => {
+      this.axios.get(`/group_class_archive_backup/${this.data.id}`).then(() => {
 				alert('Group class has been restored')
 				window.location.reload()
-			})
+      })
     },
   },
 };
