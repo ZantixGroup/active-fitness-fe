@@ -76,7 +76,7 @@ export default {
       },
       rules: {
         email: ruleSet.email,
-        password: ruleSetGen.text("Parolei jābūt vismaz 8 rakstzīmju simboliem", true, 8),
+        password: ruleSetGen.text("Password must be at least 8 symbols long", true, 8),
       },
     }
   },

@@ -11,6 +11,7 @@ import EditAction from "@/Admin/components/form_actions/EditAction.vue";
 import RedirectAction from "@/Admin/components/form_actions/RedirectAction.vue";
 import TableContent from "@/Admin/components/TableContent.vue";
 import { h } from "vue";
+import RestoreGroupClassAction from "@/Admin/components/form_actions/RestoreGroupClassAction.vue";
 
 export default {
   name: "ClassListView",
@@ -66,7 +67,8 @@ export default {
         h(
           RedirectAction,
           { route: 'view-attendees' }
-        )
+        ),
+				RestoreGroupClassAction,
       ],
     },
   }),

@@ -6,7 +6,7 @@
       :items-per-page="pagination.itemsPerPage"
       :headers="tableInfo.headers"
       :items="content"
-      :items-length="pagination.last_page"
+      :items-length="pagination.total"
       :loading="loading"
       @update:options="getData"
     >

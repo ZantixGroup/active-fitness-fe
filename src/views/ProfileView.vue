@@ -2,8 +2,8 @@
   <div class="body mb-10">
     <div class="header d-flex w-100 flex-column flex-sm-row justify-space-between align-center" id="welcomeText">
       <div>
-        <h1>Hi, {{ auth.user.name }} {{ auth.user.surname }}</h1>
-        <p>Your loyalty score: <b>{{ auth.user.loyalty }}</b></p>
+        <h1>Hi, {{ auth.user?.name }} {{ auth.user?.surname }}</h1>
+        <p>Your loyalty score: <b>{{ auth.user?.loyalty }}</b></p>
       </div>
       <v-btn type="button" @click="showUserForm" variant="flat" color="primary" >Edit profile</v-btn>
     </div>
@@ -98,13 +98,13 @@
           </div>
         </div>
       </v-form>
-    <div v-if="auth.user.role_id === 2" class="salaries-graphic">
+    <div v-if="auth.user?.role_id === 2" class="salaries-graphic">
       <h1>Salaries :</h1>
       <apexchart
-          id="slaries-chart"
-          type="area"
-          :options="chartOptions"
-          :series="series"
+        id="slaries-chart"
+        type="area"
+        :options="chartOptions"
+        :series="series"
       ></apexchart>
     </div>
     <p class="text-h5 me-auto" v-if="user_classes_active.length > 0">Upcomming classes</p>
@@ -119,6 +119,8 @@
       :key="index"
       :classes="classes"
     />
+
+    <p class="text-h5 mt-10" v-if="user_classes_active.length == 0 && user_classes_past.length == 0">You don't have any attendance history yet!</p>
   </div>
 </template>
 
@@ -154,46 +156,48 @@ export default {
       user_classes_active: [],
       user_classes_past: [],
       rules: {
-        firstname: ruleSetGen.text("Lūdzu ievadiet derīgu vārdu", true, 3),
-        lastname: ruleSetGen.text("Lūdzu ievadiet derīgu uzvārdu", true, 3),
-        address: ruleSetGen.text("Lūdzu ievadiet derīgu adresi", true, 3),
+        firstname: ruleSetGen.text("Please enter a valid name", true, 3),
+        lastname: ruleSetGen.text("Please enter a valid surname", true, 3),
+        address: ruleSetGen.text("Please enter a valid address", true, 3),
         email: ruleSet.email,
         phoneNumber: ruleSetGen.phoneNumber(undefined, false),
-        date_of_birth: ruleSetGen.date("Lūdzu ievadiet derīgu dzimšanas datumu", true),
+        date_of_birth: ruleSetGen.date("Please enter a valid birth date", true),
       },
     }
   },
-  mounted() {
+  async mounted() {
     if (!localStorage.getItem("access_token")) {
       this.$router.push({ path: "/" });
     }
-    this.axios.get('/me').then(response =>{
+    await this.axios.get('/me').then(async response => {
       this.user = response.data
       this.user_id = this.user.id
       if (this.user.role_id === 1) {
         this.user.role_id === "user"
+      } else if (this.user.role_id === 2) {
+        await this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
+          const newData = [];
+          const newCategories = [];
+          response.data.data.forEach((element) => {
+            newData.push(element.amount);
+            newCategories.push(new Date(element.period).toLocaleString('en',{month:"long"}));
+          });
+          this.series = [{
+            data: newData
+          }]
+          this.chartOptions = {
+            labels: newCategories
+          }
+        })
       }
 
       Auth.setUser(response.data)
     })
-    this.axios.get(`/profile_user_group_classes`).then(response => {
+
+    await this.axios.get(`/profile_user_group_classes`).then(response => {
       const user_classes = response.data.data
       this.user_classes_active = user_classes.filter((userClass) => (new Date(userClass.group_class.ends_at) > new Date() && userClass.is_not_attended != true)).sort((a, b) => new Date(a.group_class.starts_at) - new Date(b.group_class.starts_at))
       this.user_classes_past = user_classes.filter((userClass) => (new Date(userClass.group_class.starts_at) < new Date() || userClass.is_not_attended === true)).sort((a, b) => new Date(b.group_class.starts_at) - new Date(a.group_class.starts_at))
-    })
-    this.axios.get(`/instructor_salaries/${this.auth.user.id}`).then(response =>{
-      const newData = [];
-      const newCategories = [];
-      response.data.data.forEach((element) => {
-        newData.push(element.amount);
-        newCategories.push(new Date(element.period).toLocaleString('en',{month:"long"}));
-      });
-      this.series = [{
-        data: newData
-      }]
-      this.chartOptions = {
-        labels: newCategories
-      }
     })
   },
   methods: {
